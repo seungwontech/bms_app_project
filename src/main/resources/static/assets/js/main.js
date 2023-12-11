@@ -1,7 +1,7 @@
 /**
-* Template Name: Impact
+* Template Name: Yummy
 * Updated: Sep 18 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
+* Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
@@ -19,24 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Sticky Header on Scroll
+   * Sticky header on scroll
    */
   const selectHeader = document.querySelector('#header');
   if (selectHeader) {
-    let headerOffset = selectHeader.offsetTop;
-    let nextElement = selectHeader.nextElementSibling;
-
-    const headerFixed = () => {
-      if ((headerOffset - window.scrollY) <= 0) {
-        selectHeader.classList.add('sticked');
-        if (nextElement) nextElement.classList.add('sticked-header-offset');
-      } else {
-        selectHeader.classList.remove('sticked');
-        if (nextElement) nextElement.classList.remove('sticked-header-offset');
-      }
-    }
-    window.addEventListener('load', headerFixed);
-    document.addEventListener('scroll', headerFixed);
+    document.addEventListener('scroll', () => {
+      window.scrollY > 100 ? selectHeader.classList.add('sticked') : selectHeader.classList.remove('sticked');
+    });
   }
 
   /**
@@ -121,13 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
-
-  /**
    * Scroll top button
    */
   const scrollTop = document.querySelector('.scroll-top');
@@ -144,45 +126,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Initiate Pure Counter
+   * Initiate glightbox
    */
-  new PureCounter();
+  const glightbox = GLightbox({
+    selector: '.glightbox'
+  });
 
   /**
-   * Clients Slider
+   * Initiate pURE cOUNTER
    */
-  new Swiper('.clients-slider', {
-    speed: 400,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 40
-      },
-      480: {
-        slidesPerView: 3,
-        spaceBetween: 60
-      },
-      640: {
-        slidesPerView: 4,
-        spaceBetween: 80
-      },
-      992: {
-        slidesPerView: 6,
-        spaceBetween: 120
-      }
-    }
-  });
+  new PureCounter();
 
   /**
    * Init swiper slider with 1 slide at once in desktop view
@@ -239,41 +192,37 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /**
-   * Porfolio isotope and filter
+   * Gallery Slider
    */
-  let portfolionIsotope = document.querySelector('.portfolio-isotope');
-
-  if (portfolionIsotope) {
-
-    let portfolioFilter = portfolionIsotope.getAttribute('data-portfolio-filter') ? portfolionIsotope.getAttribute('data-portfolio-filter') : '*';
-    let portfolioLayout = portfolionIsotope.getAttribute('data-portfolio-layout') ? portfolionIsotope.getAttribute('data-portfolio-layout') : 'masonry';
-    let portfolioSort = portfolionIsotope.getAttribute('data-portfolio-sort') ? portfolionIsotope.getAttribute('data-portfolio-sort') : 'original-order';
-
-    window.addEventListener('load', () => {
-      let portfolioIsotope = new Isotope(document.querySelector('.portfolio-container'), {
-        itemSelector: '.portfolio-item',
-        layoutMode: portfolioLayout,
-        filter: portfolioFilter,
-        sortBy: portfolioSort
-      });
-
-      let menuFilters = document.querySelectorAll('.portfolio-isotope .portfolio-flters li');
-      menuFilters.forEach(function(el) {
-        el.addEventListener('click', function() {
-          document.querySelector('.portfolio-isotope .portfolio-flters .filter-active').classList.remove('filter-active');
-          this.classList.add('filter-active');
-          portfolioIsotope.arrange({
-            filter: this.getAttribute('data-filter')
-          });
-          if (typeof aos_init === 'function') {
-            aos_init();
-          }
-        }, false);
-      });
-
-    });
-
-  }
+  new Swiper('.gallery-slider', {
+    speed: 400,
+    loop: true,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      640: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      992: {
+        slidesPerView: 5,
+        spaceBetween: 20
+      }
+    }
+  });
 
   /**
    * Animation on scroll function and init
