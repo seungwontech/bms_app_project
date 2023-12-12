@@ -1,5 +1,6 @@
 package com.ssproject.bms.board.dto;
 
+import com.ssproject.bms.board.entity.BoardEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,4 +18,16 @@ public class BoardDTO {
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
 
+
+    public static BoardDTO toBoardDTO(BoardEntity boardEntity) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setNttId(boardEntity.getNttId());
+        boardDTO.setNttSj(boardEntity.getNttSj());
+        boardDTO.setNttCn(boardEntity.getNttCn());
+        boardDTO.setInqlreCo(boardEntity.getInqlreCo());
+        boardDTO.setRegDt(boardEntity.getRegDt());
+        boardDTO.setChgDt(boardEntity.getChgDt());
+
+        return boardDTO;
+    }
 }

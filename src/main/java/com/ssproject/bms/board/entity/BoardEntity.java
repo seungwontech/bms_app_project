@@ -25,8 +25,10 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setNttId(boardDTO.getNttId());
         boardEntity.setNttSj(boardDTO.getNttSj());
         boardEntity.setNttCn(boardDTO.getNttCn());
-/*        boardEntity.setUseYn(boardDTO.getUseYn());
-        boardEntity.setInqlreCo(boardDTO.getInqlreCo());*/
+        boardEntity.setInqlreCo(boardDTO.getInqlreCo());
+        boardEntity.setUseYn(boardDTO.getUseYn());
+        boardEntity.setAtchFileId(boardDTO.getAtchFileId());
+
         return boardEntity;
     }
 
