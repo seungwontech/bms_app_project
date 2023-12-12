@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">게시물 작성1</h5>
+
+            <form class="row g-3" action="/board/reg" method="post" enctype="multipart/form-data">
+                <div class="col-12">
+                    <label for="nttSj" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="nttSj" name="nttSj">
+                </div>
+                <div class="col-12">
+                    <label for="nttCn" class="form-label">Email</label>
+                    <textarea type="text" class="form-control" id="nttCn" name="nttCn"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form><!-- Vertical Form -->
+
+        </div>
+    </div>
+</div>
+
+</html>
