@@ -39,6 +39,13 @@
                             <th data-sortable="true" style="width: 26.805555555555554%;">
                                 제목
                             </th>
+                            <th data-sortable="true" style="width: 26.805555555555554%;">
+                                제목
+                            </th>
+                            <th data-sortable="true" style="width: 26.805555555555554%;">
+                                제목
+                            </th>
+
                             <th data-sortable="true" style="width: 9.166666666666666%;">
                                 조회수
                             </th>
@@ -50,6 +57,10 @@
                         <tbody>
                         <tr th:each="info : ${list}">
                             <td th:text="${info.nttId}"></td>
+
+                            <td><a th:href="@{|/board/${info.nttId}|}" th:text="${info.nttSj}"></a></td>
+                            <td><a th:href="@{/board/${info.nttId}}" th:text="${info.nttSj}"></a></td>
+
                             <td th:text="${info.nttSj}"></td>
                             <td th:text="${info.inqlreCo}"></td>
                             <td th:text="*{#temporals.format(info.regDt, 'yyyy-MM-dd HH:mm:ss')}"></td>

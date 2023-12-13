@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">게시물 작성1</h5>
+
+            <div class="datatable-container">
+                <table class="table datatable datatable-table">
+                    <tr>
+                        <th>
+                            번호
+                        </th>
+                        <td th:text="${board.nttId}"></td>
+                        <th>
+                            제목
+                        </th>
+                        <td th:text="${board.nttSj}"></td>
+                        <th>
+                            내용
+                        </th>
+                        <td th:text="${board.nttCn}"></td>
+                        <th>
+                            조회수
+                        </th>
+                        <td th:text="${board.inqlreCo}"></td>
+                        <th>
+                            날짜
+                        </th>
+                        <td th:text="${board.regDt}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
