@@ -31,9 +31,23 @@
                         <td th:text="${board.regDt}"></td>
                     </tr>
                 </table>
+                <div class="text-center">
+                    <button onclick="delBtn()" class="btn btn-primary">삭제</button>
+                    <button onclick="modBtn()" class="btn btn-primary">수정</button>
+                    <a href="/board/" class="btn btn-dark">목록</a>
+                </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function delBtn(){
+            const id = [[${board.nttId}]];
+            location.href = "/board/del/" + id;
+        }
+        function modBtn(){
+            const id = [[${board.nttId}]];
+            location.href = "/board/mod/" + id;
+        }
+    </script>
 </div>
-
 </html>

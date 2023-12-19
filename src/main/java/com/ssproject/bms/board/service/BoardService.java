@@ -47,4 +47,14 @@ public class BoardService {
             return null;
         }
     }
+
+    public BoardDTO mod(BoardDTO boardDTO) {
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+        boardRepository.save(boardEntity);
+        return findById(boardDTO.getNttId());
+    }
+
+    public void delete(int nttId) {
+        boardRepository.deleteById(nttId);
+    }
 }

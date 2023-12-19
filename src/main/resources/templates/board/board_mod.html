@@ -6,18 +6,19 @@
         <div class="card-body">
             <h5 class="card-title">게시물 작성1</h5>
 
-            <form class="row g-3" action="/board/reg" method="post" enctype="multipart/form-data">
+            <form class="row g-3" action="/board/mod" method="post" enctype="multipart/form-data">
+                <input type="text" name="nttId" th:value="${boardInfo.nttId}">
+                <input type="text" name="inqlreCo" th:value="${boardInfo.inqlreCo}">
                 <div class="col-12">
                     <label for="nttSj" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="nttSj" name="nttSj">
+                    <input type="text" class="form-control" id="nttSj" name="nttSj" th:value="${boardInfo.nttSj}">
                 </div>
                 <div class="col-12">
                     <label for="nttCn" class="form-label">내용</label>
-                    <textarea type="text" class="form-control" id="nttCn" name="nttCn"></textarea>
+                    <textarea type="text" class="form-control" id="nttCn" name="nttCn" th:text="${boardInfo.nttCn}"></textarea>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">등록</button>
-                    <button type="reset" class="btn btn-secondary">초기화</button>
+                    <button type="submit" class="btn btn-primary">수정</button>
                     <a href="/board/" class="btn btn-dark">목록</a>
                 </div>
             </form>

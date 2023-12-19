@@ -17,7 +17,7 @@ public class BoardController {
 
 
     /**
-     * 게시물 등록 이동
+     * 게시물 등록 페이지 이동
      * @return
      */
     @GetMapping("/reg")
@@ -48,6 +48,12 @@ public class BoardController {
         return "board/board_list";
     }
 
+    /**
+     * 게시물 상세 조회
+     * @param nttId
+     * @param model
+     * @return
+     */
     @GetMapping("/{nttId}")
     public String findById(@PathVariable int nttId, Model model) {
         boardService.updateHits(nttId);
@@ -56,4 +62,40 @@ public class BoardController {
         return "board/board_detail";
     }
 
+    /**
+     * 게시물 수정 페이지 이동
+     * @param nttId
+     * @param model
+     * @return
+     */
+    @GetMapping("/mod/{nttId}")
+    public String modForm(@PathVariable int nttId, Model model) {
+        BoardDTO boardDTO = boardService.findById(nttId);
+        model.addAttribute("boardInfo", boardDTO);
+        return "board/board_mod";
+    }
+
+    /**
+     * 게시물 수정
+     * @param boardDTO
+     * @param model
+     * @return
+     */
+    @PostMapping("/mod")
+    public String mod(@ModelAttribute BoardDTO boardDTO, Model model) {
+        BoardDTO board = boardService.mod(boardDTO);
+        model.addAttribute("board", board);
+        return "board/board_detail";
+    }
+
+    /**
+     * 게시물 삭제
+     * @param nttId
+     * @return
+     */
+    @GetMapping("/del/{nttId}")
+    public String del(@PathVariable int nttId) {
+        boardService.delete(nttId);
+        return "redirect:/board/";
+    }
 }
