@@ -2,28 +2,44 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <div layout:fragment="content">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">게시물 작성1</h5>
-
-            <form class="row g-3" action="/board/reg" method="post" enctype="multipart/form-data">
-                <div class="col-12">
-                    <label for="nttSj" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="nttSj" name="nttSj">
-                </div>
-                <div class="col-12">
-                    <label for="nttCn" class="form-label">내용</label>
-                    <textarea type="text" class="form-control" id="nttCn" name="nttCn"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">등록</button>
-                    <button type="reset" class="btn btn-secondary">초기화</button>
-                    <a href="/board/" class="btn btn-dark">목록</a>
-                </div>
-            </form>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
+            </div>
 
         </div>
     </div>
-</div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
 
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">게시물 작성1</h5>
+
+                    <form class="row g-3" action="/board/reg" method="post" enctype="multipart/form-data">
+                        <div class="col-12">
+                            <label for="nttSj" class="form-label">제목</label>
+                            <input type="text" class="form-control" id="nttSj" name="nttSj">
+                        </div>
+                        <div class="col-12">
+                            <label for="nttCn" class="form-label">내용</label>
+                            <textarea type="text" class="form-control" id="nttCn" name="nttCn"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">등록</button>
+                            <button type="reset" class="btn btn-secondary">초기화</button>
+                            <a href="/board/" class="btn btn-dark">목록</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 </html>

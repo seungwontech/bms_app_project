@@ -2,139 +2,132 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <div layout:fragment="content">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Datatables</h5>
-            <p>Add lightweight datatables to your project with using the <a
-                    href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a>
-                library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable.
-                Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more
-                    examples</a>.</p>
-
-            <!-- Table with stripped rows -->
-            <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-                <div class="datatable-top">
-                    <div class="datatable-dropdown">
-                        <label>
-                            <select class="datatable-selector">
-                                <option value="5">5</option>
-                                <option value="10" selected="">10</option>
-                                <option value="15">15</option>
-                                <option value="-1">All</option>
-                            </select> entries per page
-                        </label>
-                    </div>
-                    <div class="datatable-search">
-                        <input class="datatable-input" placeholder="Search..." type="search"
-                               title="Search within table">
-                    </div>
-                </div>
-                <div class="datatable-container">
-                    <table class="table datatable datatable-table">
-                        <thead>
-                        <tr>
-                            <th data-sortable="true" style="width: 26.805555555555554%;">
-                                번호
-                            </th>
-                            <th data-sortable="true" style="width: 26.805555555555554%;">
-                                제목
-                            </th>
-                            <th data-sortable="true" style="width: 26.805555555555554%;">
-                                제목
-                            </th>
-                            <th data-sortable="true" style="width: 26.805555555555554%;">
-                                제목
-                            </th>
-
-                            <th data-sortable="true" style="width: 9.166666666666666%;">
-                                조회수
-                            </th>
-                            <th data-sortable="true" style="width: 28.541666666666664%;">
-                                날짜
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="info : ${list}">
-                            <td th:text="${info.nttId}"></td>
-
-                            <td><a th:href="@{|/board/${info.nttId}|}" th:text="${info.nttSj}"></a></td>
-                            <td><a th:href="@{/board/${info.nttId}}" th:text="${info.nttSj}"></a></td>
-
-                            <td th:text="${info.nttSj}"></td>
-                            <td th:text="${info.inqlreCo}"></td>
-                            <td th:text="*{#temporals.format(info.regDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="datatable-bottom">
-                    <div class="datatable-info">Showing 1 to 10 of 100 entries</div>
-                    <nav class="datatable-pagination">
-                        <ul class="datatable-pagination-list">
-                            <li class="datatable-pagination-list-item datatable-hidden datatable-disabled">
-                                <button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">
-                                    ‹
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item datatable-active">
-                                <button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">
-                                    1
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">
-                                    2
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="3" class="datatable-pagination-list-item-link" aria-label="Page 3">
-                                    3
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="4" class="datatable-pagination-list-item-link" aria-label="Page 4">
-                                    4
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="5" class="datatable-pagination-list-item-link" aria-label="Page 5">
-                                    5
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="6" class="datatable-pagination-list-item-link" aria-label="Page 6">
-                                    6
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="7" class="datatable-pagination-list-item-link" aria-label="Page 7">
-                                    7
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item datatable-ellipsis datatable-disabled">
-                                <button class="datatable-pagination-list-item-link">…</button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="10" class="datatable-pagination-list-item-link" aria-label="Page 10">
-                                    10
-                                </button>
-                            </li>
-                            <li class="datatable-pagination-list-item">
-                                <button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">
-                                    ›
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
             </div>
-          <div class="text-center">
-            <a href="/board/reg" class="btn btn-primary">등록</a>
-          </div>
 
         </div>
     </div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Datatables</h5>
+                    <p>Add lightweight datatables to your project with using the <a
+                            href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a>
+                        library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable.
+                        Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more
+                            examples</a>.</p>
+
+                    <!-- Table with stripped rows -->
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="datatable-selector">
+                                        <option value="5">5</option>
+                                        <option value="10" selected="">10</option>
+                                        <option value="15">15</option>
+                                        <option value="-1">All</option>
+                                    </select> entries per page
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="datatable-input" placeholder="Search..." type="search"
+                                       title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container">
+                            <table class="table datatable datatable-table">
+                                <thead>
+                                <tr>
+                                    <th data-sortable="true" style="width: 26.805555555555554%;">
+                                        번호
+                                    </th>
+                                    <th data-sortable="true" style="width: 26.805555555555554%;">
+                                        제목
+                                    </th>
+                                    <th data-sortable="true" style="width: 26.805555555555554%;">
+                                        제목
+                                    </th>
+                                    <th data-sortable="true" style="width: 26.805555555555554%;">
+                                        제목
+                                    </th>
+
+                                    <th data-sortable="true" style="width: 9.166666666666666%;">
+                                        조회수
+                                    </th>
+                                    <th data-sortable="true" style="width: 28.541666666666664%;">
+                                        날짜
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="info : ${list}">
+                                    <td th:text="${info.nttId}"></td>
+
+                                    <td><a th:href="@{|/board/${info.nttId}|(page=${list.number + 1})}" th:text="${info.nttSj}"></a></td>
+                                    <td><a th:href="@{/board/${info.nttId}}" th:text="${info.nttSj}"></a></td>
+
+                                    <td th:text="${info.nttSj}"></td>
+                                    <td th:text="${info.inqlreCo}"></td>
+                                    <td th:text="*{#temporals.format(info.regDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="datatable-bottom">
+                            <nav class="datatable-pagination">
+                                <ul class="datatable-pagination-list">
+                                    <li class="datatable-pagination-list-item datatable-hidden datatable-disabled">
+                                        <a class="datatable-pagination-list-item-link" th:href="@{/board/paging(page=1)}">‹‹</a>
+                                    </li>
+                                    <li class="datatable-pagination-list-item datatable-hidden datatable-disabled">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/paging(page=${list.number})}">‹</a>
+                                    </li>
+                                    <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                                    <!-- 현재페이지는 링크 없이 숫자만 -->
+                                        <span th:if="${page == list.number + 1}" th:text="${page}"></span>
+                                                                            <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+                                        <span th:unless="${page == list.number + 1}">
+                                            <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
+                                        </span>
+                                    </span>
+
+                                    <li class="datatable-pagination-list-item datatable-active">
+                                        <button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">
+                                            1
+                                        </button>
+                                    </li>
+
+
+
+                                    <li class="datatable-pagination-list-item">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/paging(page=${list.number + 2})}">next</a>
+                                    </li>
+                                    <li class="datatable-pagination-list-item">
+                                        <a class="datatable-pagination-list-item-link" th:href="@{/board/paging(page=${list.totalPages})}">››</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                  <div class="text-center">
+                    <a href="/board/reg" class="btn btn-primary">등록</a>
+                  </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
 <!--<script type="text/javascript">
 
 </script>-->

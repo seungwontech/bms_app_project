@@ -18,6 +18,14 @@ public class BoardDTO {
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
 
+    public BoardDTO(int nttId, String nttSj, String nttCn, int inqlreCo, LocalDateTime regDt) {
+        this.nttId = nttId;
+        this.nttSj = nttSj;
+        this.nttCn = nttCn;
+        this.inqlreCo = inqlreCo;
+        this.regDt = regDt;
+    }
+
 
     public static BoardDTO toBoardDTO(BoardEntity boardEntity) {
         BoardDTO boardDTO = new BoardDTO();

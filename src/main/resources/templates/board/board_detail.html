@@ -2,43 +2,62 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <div layout:fragment="content">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">게시물 작성1</h5>
-
-            <div class="datatable-container">
-                <table class="table datatable datatable-table">
-                    <tr>
-                        <th>
-                            번호
-                        </th>
-                        <td th:text="${board.nttId}"></td>
-                        <th>
-                            제목
-                        </th>
-                        <td th:text="${board.nttSj}"></td>
-                        <th>
-                            내용
-                        </th>
-                        <td th:text="${board.nttCn}"></td>
-                        <th>
-                            조회수
-                        </th>
-                        <td th:text="${board.inqlreCo}"></td>
-                        <th>
-                            날짜
-                        </th>
-                        <td th:text="${board.regDt}"></td>
-                    </tr>
-                </table>
-                <div class="text-center">
-                    <button onclick="delBtn()" class="btn btn-primary">삭제</button>
-                    <button onclick="modBtn()" class="btn btn-primary">수정</button>
-                    <a href="/board/" class="btn btn-dark">목록</a>
-                </div>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
             </div>
+
         </div>
     </div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">게시물 작성1</h5>
+
+                    <div class="datatable-container">
+                        <table class="table datatable datatable-table">
+                            <tr>
+                                <th>
+                                    번호
+                                </th>
+                                <td th:text="${board.nttId}"></td>
+                                <th>
+                                    제목
+                                </th>
+                                <td th:text="${board.nttSj}"></td>
+                                <th>
+                                    내용
+                                </th>
+                                <td th:text="${board.nttCn}"></td>
+                                <th>
+                                    조회수
+                                </th>
+                                <td th:text="${board.inqlreCo}"></td>
+                                <th>
+                                    날짜
+                                </th>
+                                <td th:text="${board.regDt}"></td>
+                            </tr>
+                        </table>
+                        <div class="text-center">
+                            <button onclick="delBtn()" class="btn btn-primary">삭제</button>
+                            <button onclick="modBtn()" class="btn btn-primary">수정</button>
+                            <button onclick="listBtn()" class="btn btn-dark">목록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
     <script type="text/javascript">
         function delBtn(){
             const id = [[${board.nttId}]];
@@ -47,6 +66,11 @@
         function modBtn(){
             const id = [[${board.nttId}]];
             location.href = "/board/mod/" + id;
+        }
+
+        const listBtn = () => {
+            const page = [[${page}]];
+            location.href = "/board/paging?page="+page;
         }
     </script>
 </div>

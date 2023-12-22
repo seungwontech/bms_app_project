@@ -2,29 +2,47 @@
 <html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <div layout:fragment="content">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">게시물 작성1</h5>
-
-            <form class="row g-3" action="/board/mod" method="post" enctype="multipart/form-data">
-                <input type="text" name="nttId" th:value="${boardInfo.nttId}">
-                <input type="text" name="inqlreCo" th:value="${boardInfo.inqlreCo}">
-                <div class="col-12">
-                    <label for="nttSj" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="nttSj" name="nttSj" th:value="${boardInfo.nttSj}">
-                </div>
-                <div class="col-12">
-                    <label for="nttCn" class="form-label">내용</label>
-                    <textarea type="text" class="form-control" id="nttCn" name="nttCn" th:text="${boardInfo.nttCn}"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">수정</button>
-                    <a href="/board/" class="btn btn-dark">목록</a>
-                </div>
-            </form>
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
+            </div>
 
         </div>
     </div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">게시물 작성1</h5>
+
+                    <form class="row g-3" action="/board/mod" method="post" enctype="multipart/form-data">
+                        <input type="text" name="nttId" th:value="${boardInfo.nttId}">
+                        <input type="text" name="inqlreCo" th:value="${boardInfo.inqlreCo}">
+                        <div class="col-12">
+                            <label for="nttSj" class="form-label">제목</label>
+                            <input type="text" class="form-control" id="nttSj" name="nttSj" th:value="${boardInfo.nttSj}">
+                        </div>
+                        <div class="col-12">
+                            <label for="nttCn" class="form-label">내용</label>
+                            <textarea type="text" class="form-control" id="nttCn" name="nttCn" th:text="${boardInfo.nttCn}"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">수정</button>
+                            <a href="/board/" class="btn btn-dark">목록</a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 </html>
