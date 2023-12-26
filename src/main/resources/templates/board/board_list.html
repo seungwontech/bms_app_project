@@ -54,13 +54,6 @@
                                     <th data-sortable="true" style="width: 26.805555555555554%;">
                                         제목
                                     </th>
-                                    <th data-sortable="true" style="width: 26.805555555555554%;">
-                                        제목
-                                    </th>
-                                    <th data-sortable="true" style="width: 26.805555555555554%;">
-                                        제목
-                                    </th>
-
                                     <th data-sortable="true" style="width: 9.166666666666666%;">
                                         조회수
                                     </th>
@@ -72,11 +65,7 @@
                                 <tbody>
                                 <tr th:each="info : ${list}">
                                     <td th:text="${info.nttId}"></td>
-
                                     <td><a th:href="@{|/board/${info.nttId}|(page=${list.number + 1})}" th:text="${info.nttSj}"></a></td>
-                                    <td><a th:href="@{/board/${info.nttId}}" th:text="${info.nttSj}"></a></td>
-
-                                    <td th:text="${info.nttSj}"></td>
                                     <td th:text="${info.inqlreCo}"></td>
                                     <td th:text="*{#temporals.format(info.regDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                 </tr>
@@ -86,34 +75,20 @@
                         <div class="datatable-bottom">
                             <nav class="datatable-pagination">
                                 <ul class="datatable-pagination-list">
-                                    <li class="datatable-pagination-list-item datatable-hidden datatable-disabled">
-                                        <a class="datatable-pagination-list-item-link" th:href="@{/board/paging(page=1)}">‹‹</a>
+                                    <li class="datatable-pagination-list-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=1)}">‹‹</a>
                                     </li>
-                                    <li class="datatable-pagination-list-item datatable-hidden datatable-disabled">
-                                        <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/paging(page=${list.number})}">‹</a>
+                                    <li class="datatable-pagination-list-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=${list.number})}">‹</a>
                                     </li>
-                                    <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                                    <!-- 현재페이지는 링크 없이 숫자만 -->
-                                        <span th:if="${page == list.number + 1}" th:text="${page}"></span>
-                                                                            <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
-                                        <span th:unless="${page == list.number + 1}">
-                                            <a th:href="@{/board/paging(page=${page})}" th:text="${page}"></a>
-                                        </span>
-                                    </span>
-
-                                    <li class="datatable-pagination-list-item datatable-active">
-                                        <button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">
-                                            1
-                                        </button>
+                                    <li class="datatable-pagination-list-item" th:classappend="${page == list.pageable.pageNumber + 1} ? 'datatable-disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                                        <a class="datatable-pagination-list-item-link" href="#" th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
                                     </li>
-
-
-
-                                    <li class="datatable-pagination-list-item">
-                                        <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/paging(page=${list.number + 2})}">next</a>
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.number + 2})}">›</a>
                                     </li>
-                                    <li class="datatable-pagination-list-item">
-                                        <a class="datatable-pagination-list-item-link" th:href="@{/board/paging(page=${list.totalPages})}">››</a>
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                        <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.totalPages})}">››</a>
                                     </li>
                                 </ul>
                             </nav>

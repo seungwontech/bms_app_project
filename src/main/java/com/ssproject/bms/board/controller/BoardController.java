@@ -44,11 +44,18 @@ public class BoardController {
      * @param model
      * @return
      */
-    @GetMapping("/")
+    @GetMapping("/list")
     public String boardList(Model model, @PageableDefault(page=1) Pageable pageable) {
-        List<BoardDTO> list = boardService.findAll();
-        model.addAttribute("list", list);
-        model.addAttribute("page", pageable.getPageNumber());
+        //List<BoardDTO> list = boardService.findAll();
+        Page<BoardDTO> boardList = boardService.paging(pageable);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("list", boardList);
         return "board/board_list";
     }
 
@@ -110,7 +117,7 @@ public class BoardController {
      * @param model
      * @return
      */
-    @GetMapping("/paging")
+/*    @GetMapping("/paging")
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
 //        pageable.getPageNumber();
         Page<BoardDTO> boardList = boardService.paging(pageable);
@@ -125,11 +132,12 @@ public class BoardController {
         // 7 8 9
         // 보여지는 페이지 갯수 3개
         // 총 페이지 갯수 8개
+        System.out.println("boardList : "+ boardList);
 
         model.addAttribute("list", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         return "board/board_list";
 
-    }
+    }*/
 }
