@@ -69,7 +69,7 @@ public class BoardController {
     public String findById(@PathVariable int nttId, Model model, @PageableDefault(page=1) Pageable pageable) {
         boardService.updateHits(nttId);
         BoardDTO boardDTO = boardService.findById(nttId);
-        model.addAttribute("board", boardDTO);
+        model.addAttribute("boardInfo", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
         return "board/board_detail";
     }
@@ -108,7 +108,7 @@ public class BoardController {
     @GetMapping("/del/{nttId}")
     public String del(@PathVariable int nttId) {
         boardService.delete(nttId);
-        return "redirect:/board/";
+        return "redirect:/board/board_list";
     }
 
     /**

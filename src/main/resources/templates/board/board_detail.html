@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">게시물 작성1</h5>
+                    <h5 class="card-title">게시물 작성</h5>
 
                     <div class="datatable-container">
                         <table class="table datatable datatable-table">
@@ -28,23 +28,31 @@
                                 <th>
                                     번호
                                 </th>
-                                <td th:text="${board.nttId}"></td>
+                                <td th:text="${boardInfo.nttId}"></td>
+                            </tr>
+                            <tr>
                                 <th>
                                     제목
                                 </th>
-                                <td th:text="${board.nttSj}"></td>
+                                <td th:text="${boardInfo.nttSj}"></td>
+                            </tr>
+                            <tr>
                                 <th>
                                     내용
                                 </th>
-                                <td th:text="${board.nttCn}"></td>
+                                <td th:text="${boardInfo.nttCn}"></td>
+                            </tr>
+                            <tr>
                                 <th>
                                     조회수
                                 </th>
-                                <td th:text="${board.inqlreCo}"></td>
+                                <td th:text="${boardInfo.inqlreCo}"></td>
+                            </tr>
+                            <tr>
                                 <th>
                                     날짜
                                 </th>
-                                <td th:text="${board.regDt}"></td>
+                                <td th:text="${boardInfo.regDt}"></td>
                             </tr>
                         </table>
                         <div class="text-center">
@@ -59,18 +67,19 @@
         </div>
     </section>
     <script type="text/javascript">
-        function delBtn(){
-            const id = [[${board.nttId}]];
+        function delBtn() {
+            const id = [[${boardInfo.nttId}]];
             location.href = "/board/del/" + id;
         }
-        function modBtn(){
-            const id = [[${board.nttId}]];
+
+        function modBtn() {
+            const id = [[${boardInfo.nttId}]];
             location.href = "/board/mod/" + id;
         }
 
         const listBtn = () => {
             const page = [[${page}]];
-            location.href = "/board/list?page="+page;
+            location.href = "/board/list?page=" + page;
         }
     </script>
 </div>
