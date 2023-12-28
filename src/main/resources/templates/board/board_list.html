@@ -75,19 +75,19 @@
                         <div class="datatable-bottom">
                             <nav class="datatable-pagination">
                                 <ul class="datatable-pagination-list">
-                                    <li class="datatable-pagination-list-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
                                         <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=1)}">‹‹</a>
                                     </li>
-                                    <li class="datatable-pagination-list-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
                                         <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=${list.number})}">‹</a>
                                     </li>
-                                    <li class="datatable-pagination-list-item" th:classappend="${page == list.pageable.pageNumber + 1} ? 'datatable-disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                                    <li class="datatable-pagination-list-item" th:classappend="${page == (list.pageable.pageNumber + 1)} ? 'datatable-disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
                                         <a class="datatable-pagination-list-item-link" href="#" th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
                                     </li>
-                                    <li class="datatable-pagination-list-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
                                         <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.number + 2})}">›</a>
                                     </li>
-                                    <li class="datatable-pagination-list-item" th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'datatable-hidden datatable-disabled'">
+                                    <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
                                         <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.totalPages})}">››</a>
                                     </li>
                                 </ul>

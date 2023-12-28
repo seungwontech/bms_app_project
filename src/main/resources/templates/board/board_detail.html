@@ -54,6 +54,10 @@
                                 </th>
                                 <td th:text="${boardInfo.regDt}"></td>
                             </tr>
+                            <tr th:if="${boardInfo.atchFileYn} == 'Y'">
+                                <th>이미지</th>
+                                <td><img th:src="@{|/upload/${boardInfo.storedFileNm}|}" alt=""></td>
+                            </tr>
                         </table>
                         <div class="text-center">
                             <button onclick="delBtn()" class="btn btn-primary">삭제</button>

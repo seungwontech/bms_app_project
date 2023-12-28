@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -34,7 +35,7 @@ public class BoardController {
      * @return
      */
     @PostMapping("/reg")
-    public String reg(@ModelAttribute BoardDTO boardDTO) {
+    public String reg(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.reg(boardDTO);
         return "board/board_list";
     }
@@ -49,12 +50,13 @@ public class BoardController {
         //List<BoardDTO> list = boardService.findAll();
         Page<BoardDTO> boardList = boardService.paging(pageable);
         int blockLimit = 3;
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
-
+        System.out.println(startPage);
+        System.out.println(endPage);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        model.addAttribute("endPage", endPage == 0 ? 1 : endPage);
         model.addAttribute("list", boardList);
         return "board/board_list";
     }

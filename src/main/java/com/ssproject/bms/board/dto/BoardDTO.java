@@ -2,6 +2,7 @@ package com.ssproject.bms.board.dto;
 
 import com.ssproject.bms.board.entity.BoardEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +15,13 @@ public class BoardDTO {
     private String nttCn;
     private int inqlreCo;
     private char useYn;
-    private String atchFileId;
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
+
+    private MultipartFile boardFile;
+    private String originalFileNm;    // 원본 파일 이름
+    private String storedFileNm;      // 서버 저장용 파일 이름
+    private char atchFileYn;            // 파일 첨부 여부(첨부 Y, 미첨부 N)
 
     public BoardDTO(int nttId, String nttSj, String nttCn, int inqlreCo, LocalDateTime regDt) {
         this.nttId = nttId;
@@ -35,6 +40,12 @@ public class BoardDTO {
         boardDTO.setInqlreCo(boardEntity.getInqlreCo());
         boardDTO.setRegDt(boardEntity.getRegDt());
         boardDTO.setChgDt(boardEntity.getChgDt());
+        boardDTO.setAtchFileYn(boardEntity.getAtchFileYn());
+
+        if (boardEntity.getAtchFileYn() == 'Y') {
+            boardDTO.setOriginalFileNm(boardEntity.getBoardFileEntityList().get(0).getOriginalFileNm());
+            boardDTO.setStoredFileNm(boardEntity.getBoardFileEntityList().get(0).getStoredFileNm());
+        }
 
         return boardDTO;
     }
