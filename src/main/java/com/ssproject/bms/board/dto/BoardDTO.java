@@ -1,10 +1,13 @@
 package com.ssproject.bms.board.dto;
 
 import com.ssproject.bms.board.entity.BoardEntity;
+import com.ssproject.bms.board.entity.BoardFileEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor // 기본생성자
@@ -18,9 +21,9 @@ public class BoardDTO {
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
 
-    private MultipartFile boardFile;
-    private String originalFileNm;    // 원본 파일 이름
-    private String storedFileNm;      // 서버 저장용 파일 이름
+    private List<MultipartFile> boardFile;
+    private List<String> originalFileNm;    // 원본 파일 이름
+    private List<String> storedFileNm;      // 서버 저장용 파일 이름
     private char atchFileYn;            // 파일 첨부 여부(첨부 Y, 미첨부 N)
 
     public BoardDTO(int nttId, String nttSj, String nttCn, int inqlreCo, LocalDateTime regDt) {
@@ -43,8 +46,16 @@ public class BoardDTO {
         boardDTO.setAtchFileYn(boardEntity.getAtchFileYn());
 
         if (boardEntity.getAtchFileYn() == 'Y') {
-            boardDTO.setOriginalFileNm(boardEntity.getBoardFileEntityList().get(0).getOriginalFileNm());
-            boardDTO.setStoredFileNm(boardEntity.getBoardFileEntityList().get(0).getStoredFileNm());
+            List<String> originalFileNmList = new ArrayList<>();
+            List<String> storedFileNmList = new ArrayList<>();
+            for (BoardFileEntity boardFileEntity : boardEntity.getBoardFileEntityList()){
+                originalFileNmList.add(boardFileEntity.getOriginalFileNm());
+                storedFileNmList.add(boardFileEntity.getStoredFileNm());
+                //boardDTO.setOriginalFileNm(boardEntity.getBoardFileEntityList().get(0).getOriginalFileNm());
+                //boardDTO.setStoredFileNm(boardEntity.getBoardFileEntityList().get(0).getStoredFileNm());
+            }
+            boardDTO.setOriginalFileNm(originalFileNmList);
+            boardDTO.setStoredFileNm(storedFileNmList);
         }
 
         return boardDTO;

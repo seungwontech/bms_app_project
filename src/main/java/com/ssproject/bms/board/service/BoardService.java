@@ -32,17 +32,19 @@ public class BoardService {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             boardRepository.save(boardEntity);
         } else {
-            MultipartFile boardFile = boardDTO.getBoardFile();
-            String originalFileNm = boardFile.getOriginalFilename();
-            String storedFileNm = System.currentTimeMillis() + "_" + originalFileNm;
-            String savePath = "C:/jpaUploadFile/" + storedFileNm;
-            boardFile.transferTo(new File(savePath));
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             int saveNttId = boardRepository.save(boardEntity).getNttId();
             BoardEntity board = boardRepository.findById(saveNttId).get();
 
-            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFileNm, storedFileNm);
-            boardFileRepository.save(boardFileEntity);
+            for(MultipartFile boardFile : boardDTO.getBoardFile()) {
+                String originalFileNm = boardFile.getOriginalFilename();
+                String storedFileNm = System.currentTimeMillis() + "_" + originalFileNm;
+                String savePath = "C:/jpaUploadFile/" + storedFileNm;
+                boardFile.transferTo(new File(savePath));
+
+                BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFileNm, storedFileNm);
+                boardFileRepository.save(boardFileEntity);
+            }
         }
     }
 
