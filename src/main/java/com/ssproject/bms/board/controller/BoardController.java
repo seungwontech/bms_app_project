@@ -37,7 +37,7 @@ public class BoardController {
     @PostMapping("/reg")
     public String reg(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.reg(boardDTO);
-        return "board/board_list";
+        return "redirect:/board/list";
     }
 
     /**
@@ -53,8 +53,6 @@ public class BoardController {
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
         int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
 
-        System.out.println(startPage);
-        System.out.println(endPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage == 0 ? 1 : endPage);
         model.addAttribute("list", boardList);
@@ -70,8 +68,8 @@ public class BoardController {
     @GetMapping("/{nttId}")
     public String findById(@PathVariable int nttId, Model model, @PageableDefault(page=1) Pageable pageable) {
         boardService.updateHits(nttId);
-        BoardDTO boardDTO = boardService.findById(nttId);
-        model.addAttribute("boardInfo", boardDTO);
+        BoardDTO boardInfo = boardService.findById(nttId);
+        model.addAttribute("boardInfo", boardInfo);
         model.addAttribute("page", pageable.getPageNumber());
         return "board/board_detail";
     }
@@ -83,9 +81,10 @@ public class BoardController {
      * @return
      */
     @GetMapping("/mod/{nttId}")
-    public String modForm(@PathVariable int nttId, Model model) {
+    public String modForm(@PathVariable int nttId, Model model, @PageableDefault(page=1) Pageable pageable) {
         BoardDTO boardDTO = boardService.findById(nttId);
         model.addAttribute("boardInfo", boardDTO);
+        model.addAttribute("page", pageable.getPageNumber());
         return "board/board_mod";
     }
 
@@ -96,10 +95,16 @@ public class BoardController {
      * @return
      */
     @PostMapping("/mod")
-    public String mod(@ModelAttribute BoardDTO boardDTO, Model model) {
-        BoardDTO board = boardService.mod(boardDTO);
-        model.addAttribute("board", board);
-        return "board/board_detail";
+    public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page=1) Pageable pageable) {
+        // BoardDTO boardInfo = boardService.mod(boardDTO);
+        // model.addAttribute("boardInfo", boardInfo);
+        // model.addAttribute("page", pageable.getPageNumber());
+
+        boardService.mod(boardDTO);
+        int id = boardDTO.getNttId();
+        int page = pageable.getPageNumber();
+
+        return "redirect:/board/" + id + "?page=" + page;
     }
 
     /**
@@ -110,7 +115,7 @@ public class BoardController {
     @GetMapping("/del/{nttId}")
     public String del(@PathVariable int nttId) {
         boardService.delete(nttId);
-        return "redirect:/board/board_list";
+        return "redirect:/board/list";
     }
 
     /**
