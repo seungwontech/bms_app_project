@@ -38,16 +38,6 @@ public class BoardEntity extends BaseEntity {
         return boardEntity;
     }
 
-    public static BoardEntity toUpdateEntity(BoardDTO boardDTO) {
-        BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setNttId(boardDTO.getNttId());
-        boardEntity.setNttSj(boardDTO.getNttSj());
-        boardEntity.setNttCn(boardDTO.getNttCn());
-        boardEntity.setInqlreCo(boardDTO.getInqlreCo());
-        boardEntity.setUseYn(boardDTO.getUseYn());
-        return boardEntity;
-    }
-
     public static BoardEntity toSaveFileEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setNttId(boardDTO.getNttId());
@@ -56,6 +46,19 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setInqlreCo(0);
         boardEntity.setUseYn('Y');
         boardEntity.setAtchFileYn('Y'); // 파일 있음.
+
+        return boardEntity;
+    }
+
+    public static BoardEntity toUpdateEntity(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setNttId(boardDTO.getNttId());
+        boardEntity.setNttSj(boardDTO.getNttSj());
+        boardEntity.setNttCn(boardDTO.getNttCn());
+        boardEntity.setInqlreCo(boardDTO.getInqlreCo());
+        boardEntity.setUseYn(boardDTO.getUseYn());
+        boardEntity.setAtchFileYn(boardDTO.getAtchFileYn());
+
         return boardEntity;
     }
 }

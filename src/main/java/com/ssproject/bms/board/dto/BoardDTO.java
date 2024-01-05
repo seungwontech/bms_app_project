@@ -43,6 +43,7 @@ public class BoardDTO {
         boardDTO.setInqlreCo(boardEntity.getInqlreCo());
         boardDTO.setRegDt(boardEntity.getRegDt());
         boardDTO.setChgDt(boardEntity.getChgDt());
+        boardDTO.setUseYn(boardEntity.getUseYn());
         boardDTO.setAtchFileYn(boardEntity.getAtchFileYn());
 
         if (boardEntity.getAtchFileYn() == 'Y') {
