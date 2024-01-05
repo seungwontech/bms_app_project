@@ -28,7 +28,15 @@ public class BoardService {
     private final BoardFileRepository boardFileRepository;
 
     public void reg(BoardDTO boardDTO) throws IOException {
-        if (boardDTO.getBoardFile().isEmpty()) {
+        boolean isEmptyFile = false;
+
+        for (MultipartFile boardFile : boardDTO.getBoardFile()) {
+            if (!boardFile.isEmpty()) {
+                isEmptyFile = true;
+            }
+        }
+
+        if (!isEmptyFile) {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             boardRepository.save(boardEntity);
         } else {
@@ -36,7 +44,10 @@ public class BoardService {
             int saveNttId = boardRepository.save(boardEntity).getNttId();
             BoardEntity board = boardRepository.findById(saveNttId).get();
 
-            for(MultipartFile boardFile : boardDTO.getBoardFile()) {
+            for (MultipartFile boardFile : boardDTO.getBoardFile()) {
+                if (boardFile.isEmpty()) {
+                    continue;
+                }
                 String originalFileNm = boardFile.getOriginalFilename();
                 String storedFileNm = System.currentTimeMillis() + "_" + originalFileNm;
                 String savePath = "C:/jpaUploadFile/" + storedFileNm;
