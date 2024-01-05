@@ -56,9 +56,11 @@
                             </tr>
                             <tr>
                                 <th>이미지</th>
-                                <td th:each="fileName :${boardInfo.storedFileNm}">
-                                    <th:block th:if="${boardInfo.atchFileYn} == 'Y'">
-                                        <img th:src="@{|/upload/${fileName}|}" alt="" class="tb_img">
+                                <td>
+                                    <th:block th:each="fileName :${boardInfo.storedFileNm}">
+                                        <th:block th:if="${boardInfo.atchFileYn} == 'Y'">
+                                            <img th:src="@{|/upload/${fileName}|}" alt="" class="tb_img">
+                                        </th:block>
                                     </th:block>
                                 </td>
                             </tr>
