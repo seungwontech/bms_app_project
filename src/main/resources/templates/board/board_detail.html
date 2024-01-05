@@ -54,11 +54,12 @@
                                 </th>
                                 <td th:text="${boardInfo.regDt}" colspan="3"></td>
                             </tr>
-                            <tr th:if="${boardInfo.atchFileYn} == 'Y'">
-
+                            <tr>
                                 <th>이미지</th>
                                 <td th:each="fileName :${boardInfo.storedFileNm}">
-                                    <img th:src="@{|/upload/${fileName}|}" alt="" class="tb_img">
+                                    <th:block th:if="${boardInfo.atchFileYn} == 'Y'">
+                                        <img th:src="@{|/upload/${fileName}|}" alt="" class="tb_img">
+                                    </th:block>
                                 </td>
                             </tr>
                         </table>

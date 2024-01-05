@@ -28,15 +28,15 @@ public class BoardService {
     private final BoardFileRepository boardFileRepository;
 
     public void reg(BoardDTO boardDTO) throws IOException {
-        boolean isEmptyFile = false;
+        boolean isFileEmpty = false;
 
         for (MultipartFile boardFile : boardDTO.getBoardFile()) {
             if (!boardFile.isEmpty()) {
-                isEmptyFile = true;
+                isFileEmpty = true;
             }
         }
 
-        if (!isEmptyFile) {
+        if (!isFileEmpty) {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             boardRepository.save(boardEntity);
         } else {
