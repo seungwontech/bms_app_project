@@ -63,8 +63,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="info : ${list}">
-                                    <td th:text="${info.nttId}"></td>
+                                <tr th:each="info, stat : ${list}">
+                                    <td th:text="${list.totalElements - (list.number * list.size) - stat.index}"></td>
                                     <td><a th:href="@{|/board/${info.nttId}|(page=${list.number + 1})}" th:text="${info.nttSj}"></a></td>
                                     <td th:text="${info.inqlreCo}"></td>
                                     <td th:text="*{#temporals.format(info.regDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
