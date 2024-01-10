@@ -1,7 +1,9 @@
 package com.ssproject.bms.board.controller;
 
 import com.ssproject.bms.board.dto.BoardDTO;
+import com.ssproject.bms.board.dto.CommentDTO;
 import com.ssproject.bms.board.service.BoardService;
+import com.ssproject.bms.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +20,11 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
-
+    private final CommentService commentService;
 
     /**
      * 게시물 등록 페이지 이동
+     *
      * @return
      */
     @GetMapping("/reg")
@@ -31,6 +34,7 @@ public class BoardController {
 
     /**
      * 게시물 등록
+     *
      * @param boardDTO
      * @return
      */
@@ -42,11 +46,12 @@ public class BoardController {
 
     /**
      * 게시물 목록 조회
+     *
      * @param model
      * @return
      */
     @GetMapping("/list")
-    public String boardList(Model model, @PageableDefault(page=1) Pageable pageable) {
+    public String boardList(Model model, @PageableDefault(page = 1) Pageable pageable) {
         //List<BoardDTO> list = boardService.findAll();
         Page<BoardDTO> boardList = boardService.paging(pageable);
         int blockLimit = 3;
@@ -61,14 +66,17 @@ public class BoardController {
 
     /**
      * 게시물 상세 조회
+     *
      * @param nttId
      * @param model
      * @return
      */
     @GetMapping("/{nttId}")
-    public String findById(@PathVariable int nttId, Model model, @PageableDefault(page=1) Pageable pageable) {
+    public String findById(@PathVariable int nttId, Model model, @PageableDefault(page = 1) Pageable pageable) {
         boardService.updateHits(nttId);
         BoardDTO boardInfo = boardService.findById(nttId);
+        List<CommentDTO> commentDTOList = commentService.findAll(nttId);
+        model.addAttribute("commentList", commentDTOList);
         model.addAttribute("boardInfo", boardInfo);
         model.addAttribute("page", pageable.getPageNumber());
         return "board/board_detail";
@@ -76,12 +84,13 @@ public class BoardController {
 
     /**
      * 게시물 수정 페이지 이동
+     *
      * @param nttId
      * @param model
      * @return
      */
     @GetMapping("/mod/{nttId}")
-    public String modForm(@PathVariable int nttId, Model model, @PageableDefault(page=1) Pageable pageable) {
+    public String modForm(@PathVariable int nttId, Model model, @PageableDefault(page = 1) Pageable pageable) {
         BoardDTO boardDTO = boardService.findById(nttId);
         model.addAttribute("boardInfo", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
@@ -90,12 +99,13 @@ public class BoardController {
 
     /**
      * 게시물 수정
+     *
      * @param boardDTO
      * @param model
      * @return
      */
     @PostMapping("/mod")
-    public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page=1) Pageable pageable) {
+    public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page = 1) Pageable pageable) {
         // BoardDTO boardInfo = boardService.mod(boardDTO);
         // model.addAttribute("boardInfo", boardInfo);
         // model.addAttribute("page", pageable.getPageNumber());
@@ -109,6 +119,7 @@ public class BoardController {
 
     /**
      * 게시물 삭제
+     *
      * @param nttId
      * @return
      */
