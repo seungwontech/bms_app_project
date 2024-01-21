@@ -18,10 +18,10 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/save")
-    public ResponseEntity save(@ModelAttribute CommentDTO commentDTO) {
+    @PostMapping("/reg")
+    public ResponseEntity reg(@ModelAttribute CommentDTO commentDTO) {
         System.out.println("commentDTO = " + commentDTO);
-        int saveResult = commentService.save(commentDTO);
+        int saveResult = commentService.reg(commentDTO);
         if (saveResult > 0) {
             List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getNttId());
             return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
