@@ -20,7 +20,6 @@ public class CommentController {
 
     @PostMapping("/reg")
     public ResponseEntity reg(@ModelAttribute CommentDTO commentDTO) {
-        System.out.println("commentDTO = " + commentDTO);
         int saveResult = commentService.reg(commentDTO);
         if (saveResult > 0) {
             List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getNttId());
