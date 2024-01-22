@@ -1,11 +1,13 @@
 package com.ssproject.bms.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssproject.bms.member.dto.MemberDTO;
 import com.ssproject.bms.board.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,7 +36,17 @@ public class MemberEntity extends BaseEntity {
         return memberEntity;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="mberId")
-    private List<MemberRoleEntity> roles;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "mberId")
+//    private List<MemberRoleEntity> roles;
+
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "mber_author_tbl",
+            joinColumns = @JoinColumn(name = "mber_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+
+    private List<MemberRoleEntity> authors = new ArrayList<>();
 }

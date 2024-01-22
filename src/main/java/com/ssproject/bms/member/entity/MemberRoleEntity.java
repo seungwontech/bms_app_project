@@ -1,23 +1,28 @@
 package com.ssproject.bms.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(of = "mberId")
 @ToString
-@Table(name="mber_author_tbl")
+@Table(name="author_tbl")
 public class MemberRoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int mberId;
-
     private int authorId;
+    private String authorNm;
+
+
+    @ManyToMany(mappedBy = "authors")
+    @JsonIgnore
+    private List<MemberEntity> members;
 
 }
