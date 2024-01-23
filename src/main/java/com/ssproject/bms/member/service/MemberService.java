@@ -4,6 +4,8 @@ import com.ssproject.bms.member.dto.MemberDTO;
 import com.ssproject.bms.member.entity.MemberEntity;
 import com.ssproject.bms.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,7 +16,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public void reg(MemberDTO memberDTO) {
+        memberDTO.setMberPw(bCryptPasswordEncoder.encode(memberDTO.getMberPw()));
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
         memberRepository.save(memberEntity);
     }

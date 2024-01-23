@@ -1,14 +1,13 @@
 package com.ssproject.bms;
 
+import com.ssproject.bms.member.entity.MemberAuthorEntity;
 import com.ssproject.bms.member.entity.MemberEntity;
-import com.ssproject.bms.member.entity.MemberRoleEntity;
 import com.ssproject.bms.repository.MemberRepositoryTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
 
 @SpringBootTest
 public class MemberTests {
@@ -17,7 +16,6 @@ public class MemberTests {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Test
     public void insertTest() {
@@ -28,15 +26,15 @@ public class MemberTests {
             member.setMberEmail("hihi@" + i);
             member.setUseYn('Y');
             member.setMberNm("이승원");
-            MemberRoleEntity role = new MemberRoleEntity();
-            System.out.println(role.getAuthorNm());
+            MemberAuthorEntity author = new MemberAuthorEntity();
+            System.out.println(author.getAuthorNm());
             if (i <= 80) {
-                role.setAuthorId(2);
+                author.setAuthorId(2);
             } else if (i <= 90) {
-                role.setAuthorNm("admin");
+                author.setAuthorNm("admin");
             }
-            member.getAuthors().add(role);
-            System.out.println("member : "+member);
+            member.getAuthors().add(author);
+            System.out.println("member : " + member);
             memberRepositoryTests.save(member);
         }
     }

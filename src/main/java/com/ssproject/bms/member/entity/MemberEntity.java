@@ -36,10 +36,6 @@ public class MemberEntity extends BaseEntity {
         return memberEntity;
     }
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "mberId")
-//    private List<MemberRoleEntity> roles;
-
 
     @JsonIgnore
     @ManyToMany
@@ -47,6 +43,5 @@ public class MemberEntity extends BaseEntity {
             name = "mber_author_tbl",
             joinColumns = @JoinColumn(name = "mber_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-
-    private List<MemberRoleEntity> authors = new ArrayList<>();
+    private List<MemberAuthorEntity> authors = new ArrayList<>();
 }
