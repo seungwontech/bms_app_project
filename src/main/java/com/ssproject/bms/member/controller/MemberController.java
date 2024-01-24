@@ -30,10 +30,11 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm() {
         return "member/member_login";
     }
 
+    /*
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
         MemberDTO  loginResult = memberService.login(memberDTO);
@@ -46,4 +47,5 @@ public class MemberController {
             return "member/member_login";
         }
     }
+    */
 }

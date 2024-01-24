@@ -24,6 +24,7 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
+    /*
     public MemberDTO login(MemberDTO memberDTO) {
         Optional<MemberEntity> byMemberEmail = memberRepository.findByMberEmail(memberDTO.getMberEmail());
         MemberDTO returnDTO = null;
@@ -35,4 +36,5 @@ public class MemberService {
         }
         return returnDTO;
     }
+    */
 }

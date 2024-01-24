@@ -1,16 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="/member/reg" method="post">
-    <!-- name속성: 서버로 전송할 때 변수이름의 역할 -->
-    이메일: <input type="text" name="mberEmail"> <br>
-    비밀번호: <input type="password" name="mberPw"> <br>
-    이름: <input type="text" name="mberNm"> <br>
-    <input type="submit" value="회원가입">
-</form>
-</body>
+<html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">게시물 작성1</h5>
+                    <form class="row g-3" action="/member/reg" method="post">
+                        <div class="col-12">
+                            <label for="mberEmail" class="form-label">이메일</label>
+                            <input class="form-control" type="text" name="mberEmail" id="mberEmail"> <br>
+                        </div>
+                        <div class="col-12">
+                            <label for="mberPw" class="form-label">비밀번호</label>
+                            <input class="form-control" type="password" name="mberPw" id="mberPw"> <br>
+                        </div>
+                        <div class="col-12">
+                            <label for="mberNm" class="form-label">이름</label>
+                            <input class="form-control" type="text" name="mberNm" id="mberNm"> <br>
+                        </div>
+                        <div class="col-12">
+                            <label for="mberEmail" class="form-label">이메일</label>
+                            <input class="form-control" type="text" name="mberEmail" id="mberEmail"> <br>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">회원가입</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 </html>
