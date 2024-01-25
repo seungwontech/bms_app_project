@@ -2,7 +2,7 @@ package com.ssproject.bms.member.config;
 
 import com.ssproject.bms.member.entity.MemberEntity;
 import com.ssproject.bms.member.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +15,10 @@ import java.util.Collection;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
-    
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String mberEmail) throws UsernameNotFoundException {
