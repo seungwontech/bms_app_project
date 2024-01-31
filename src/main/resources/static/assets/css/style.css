@@ -275,3 +275,8 @@ td .tb_img{
   width: 140px;
   margin-top: 5px;
 }
+
+.card-center {
+  display: flex;
+  justify-content: center;
+}

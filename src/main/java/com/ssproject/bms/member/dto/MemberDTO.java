@@ -18,6 +18,7 @@ public class MemberDTO {
     private char useYn;
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
+    private int authorId;
 
     public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();

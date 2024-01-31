@@ -1,40 +1,63 @@
 package com.ssproject.bms.member.service;
 
 import com.ssproject.bms.member.dto.MemberDTO;
+import com.ssproject.bms.member.entity.MemberAuthorEntity;
 import com.ssproject.bms.member.entity.MemberEntity;
 import com.ssproject.bms.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.Collection;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * 회원가입
+     * @param memberDTO
+     */
     public void reg(MemberDTO memberDTO) {
         memberDTO.setMberPw(bCryptPasswordEncoder.encode(memberDTO.getMberPw()));
+
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
+
+        MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
+        memberAuthorEntity.setAuthorId(memberDTO.getAuthorId());
+
+        memberEntity.getAuthors().add(memberAuthorEntity);
         memberRepository.save(memberEntity);
     }
 
-    /*
-    public MemberDTO login(MemberDTO memberDTO) {
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMberEmail(memberDTO.getMberEmail());
-        MemberDTO returnDTO = null;
-        if (byMemberEmail.isPresent()) {
-            MemberEntity memberEntity = byMemberEmail.get();
-            if (memberDTO.getMberPw().equals(memberEntity.getMberPw())) {
-                returnDTO = MemberDTO.toMemberDTO(memberEntity);
-            }
-        }
-        return returnDTO;
+    @Override
+    public UserDetails loadUserByUsername(String mberEmail) throws UsernameNotFoundException {
+
+        MemberEntity mberInfo = memberRepository.findByMberEmail(mberEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("Email: " + mberEmail + " not found"));
+        return new org.springframework.security.core.userdetails.User(mberInfo.getMberEmail(),
+                mberInfo.getMberPw(), getAuthorities(mberInfo));
+
     }
-    */
+
+    private static Collection<? extends GrantedAuthority> getAuthorities(MemberEntity mberInfo) {
+        String[] mberAuthors = mberInfo.getAuthors()
+                .stream()
+                .map((author) -> author.getAuthorNm())
+                .toArray(String[]::new);
+
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(mberAuthors);
+        return authorities;
+    }
 }
