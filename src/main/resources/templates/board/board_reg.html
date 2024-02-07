@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <h5 class="card-title">게시물 작성1</h5>
 
-                    <form class="row g-3" action="/board/reg" method="post" enctype="multipart/form-data">
+                    <form class="row g-3" th:action="@{/board/reg}" method="POST" enctype="multipart/form-data">
                         <div class="col-12">
                             <label for="nttSj" class="form-label">제목</label>
                             <input type="text" class="form-control" id="nttSj" name="nttSj">

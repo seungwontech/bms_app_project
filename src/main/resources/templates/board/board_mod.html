@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <h5 class="card-title">게시물 작성</h5>
 
-                    <form class="row g-3" action="/board/mod" method="post" enctype="multipart/form-data">
+                    <form class="row g-3" th:action="@{/board/mod}" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="nttId" th:value="${boardInfo.nttId}">
                         <input type="hidden" name="inqlreCo" th:value="${boardInfo.inqlreCo}">
                         <input type="hidden" name="atchFileYn" th:value="${boardInfo.atchFileYn}">

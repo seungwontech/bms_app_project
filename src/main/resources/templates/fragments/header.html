@@ -46,7 +46,7 @@
             <form th:action="@{/member/logout}" method="POST" sec:authorize="isAuthenticated()">
                 <span sec:authentication="name">사용자</span>
                 <span sec:authentication="principal.authorities">권한</span>
-                <button class="btn btn-primary" type="submit">Logout</button>
+                <button type="submit" class="btn btn-primary">Logout</button>
             </form>
 <!--
             <a class="btn-book-a-table" href="#book-a-table">Book a Table</a>
