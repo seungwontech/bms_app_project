@@ -6,6 +6,8 @@ import com.ssproject.bms.board.entity.BoardEntity;
 import com.ssproject.bms.board.entity.BoardFileEntity;
 import com.ssproject.bms.board.repository.BoardFileRepository;
 import com.ssproject.bms.board.repository.BoardRepository;
+import com.ssproject.bms.member.entity.MemberEntity;
+import com.ssproject.bms.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,10 +26,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+
     private final BoardRepository boardRepository;
+
     private final BoardFileRepository boardFileRepository;
 
-    public void reg(BoardDTO boardDTO) throws IOException {
+    private final MemberRepository memberRepository;
+
+    public void reg(String mberEmail, BoardDTO boardDTO) throws IOException {
         boolean isFileEmpty = false;
 
         for (MultipartFile boardFile : boardDTO.getBoardFile()) {
@@ -36,11 +42,16 @@ public class BoardService {
             }
         }
 
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMberEmail(mberEmail);
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
         if (!isFileEmpty) {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+            boardEntity.setMember(memberEntity);
             boardRepository.save(boardEntity);
         } else {
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
+            boardEntity.setMember(memberEntity);
             int saveNttId = boardRepository.save(boardEntity).getNttId();
             BoardEntity board = boardRepository.findById(saveNttId).get();
 

@@ -18,6 +18,7 @@ public class BoardDTO {
     private String nttCn;
     private int inqlreCo;
     private char useYn;
+    private int mberId;
     private LocalDateTime regDt;
     private LocalDateTime chgDt;
 

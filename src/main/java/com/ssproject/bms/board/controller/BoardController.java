@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,8 @@ public class BoardController {
      * @return
      */
     @PostMapping("/reg")
-    public String reg(@ModelAttribute BoardDTO boardDTO) throws IOException {
-        boardService.reg(boardDTO);
+    public String reg(@ModelAttribute BoardDTO boardDTO, Authentication autentication) throws IOException {
+        boardService.reg(autentication.getName(), boardDTO);
         return "redirect:/board/list";
     }
 

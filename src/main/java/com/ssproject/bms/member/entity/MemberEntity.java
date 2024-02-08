@@ -1,6 +1,7 @@
 package com.ssproject.bms.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssproject.bms.board.entity.BoardEntity;
 import com.ssproject.bms.member.dto.MemberDTO;
 import com.ssproject.bms.board.entity.BaseEntity;
 import lombok.Getter;
@@ -40,8 +41,13 @@ public class MemberEntity extends BaseEntity {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "mber_author_tbl",
-            joinColumns = @JoinColumn(name = "mber_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
+            name = "mber_author_tbl"
+            , joinColumns = @JoinColumn(name = "mber_id")
+            , inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<MemberAuthorEntity> authors = new ArrayList<>();
+
+
+    @OneToMany(mappedBy ="member", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<BoardEntity> boards = new ArrayList<>();
 }

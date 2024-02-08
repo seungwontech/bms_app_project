@@ -1,6 +1,8 @@
 package com.ssproject.bms.board.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssproject.bms.board.dto.BoardDTO;
+import com.ssproject.bms.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +30,10 @@ public class BoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "mber_id")
+    @JsonIgnore
+    private MemberEntity member;
 
     public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
