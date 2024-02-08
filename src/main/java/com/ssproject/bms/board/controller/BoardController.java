@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -125,6 +126,7 @@ public class BoardController {
      * @param nttId
      * @return
      */
+    @Secured("ROLE_ADMIN")
     @GetMapping("/del/{nttId}")
     public String del(@PathVariable int nttId) {
         boardService.delete(nttId);
