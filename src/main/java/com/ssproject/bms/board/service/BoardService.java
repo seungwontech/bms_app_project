@@ -33,6 +33,15 @@ public class BoardService {
 
     private final MemberRepository memberRepository;
 
+    public MemberEntity getMberInfo(String mberEmail) {
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMberEmail(mberEmail);
+        MemberEntity memberEntity = optionalMemberEntity.get();
+
+        return memberEntity;
+    }
+
+
     public void reg(String mberEmail, BoardDTO boardDTO) throws IOException {
         boolean isFileEmpty = false;
 
@@ -42,16 +51,13 @@ public class BoardService {
             }
         }
 
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMberEmail(mberEmail);
-        MemberEntity memberEntity = optionalMemberEntity.get();
-
         if (!isFileEmpty) {
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
-            boardEntity.setMember(memberEntity);
+            boardEntity.setMember(getMberInfo(mberEmail));
             boardRepository.save(boardEntity);
         } else {
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
-            boardEntity.setMember(memberEntity);
+            boardEntity.setMember(getMberInfo(mberEmail));
             int saveNttId = boardRepository.save(boardEntity).getNttId();
             BoardEntity board = boardRepository.findById(saveNttId).get();
 
@@ -97,8 +103,9 @@ public class BoardService {
         }
     }
 
-    public BoardDTO mod(BoardDTO boardDTO) {
+    public BoardDTO mod(String mberEmail, BoardDTO boardDTO) {
         BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+        boardEntity.setMember(getMberInfo(mberEmail));
         boardRepository.save(boardEntity);
         return findById(boardDTO.getNttId());
     }

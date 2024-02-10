@@ -108,12 +108,12 @@ public class BoardController {
      * @return
      */
     @PostMapping("/mod")
-    public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page = 1) Pageable pageable) {
+    public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page = 1) Pageable pageable, Authentication autentication) {
         // BoardDTO boardInfo = boardService.mod(boardDTO);
         // model.addAttribute("boardInfo", boardInfo);
         // model.addAttribute("page", pageable.getPageNumber());
 
-        boardService.mod(boardDTO);
+        boardService.mod(autentication.getName(), boardDTO);
         int id = boardDTO.getNttId();
         int page = pageable.getPageNumber();
 
