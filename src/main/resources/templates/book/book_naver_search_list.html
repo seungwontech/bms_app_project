@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http//www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<div layout:fragment="content">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sample Inner Page</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sample Inner Page</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">네이버 도서 검색</h5>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+                                <label>
+                                    <select class="datatable-selector">
+                                        <option value="5">5</option>
+                                        <option value="10" selected="">10</option>
+                                        <option value="15">15</option>
+                                        <option value="-1">All</option>
+                                    </select> entries per page
+                                </label>
+                            </div>
+                            <div class="datatable-search">
+                                <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+                            </div>
+                        </div>
+                        <div class="datatable-container">
+                            <table class="table datatable datatable-table">
+                                <thead>
+                                <tr>
+                                    <th data-sortable="true" style="width: auto;">
+                                        책표지
+                                    </th>
+                                    <th data-sortable="true" style="width: 25%;">
+                                        책이름
+                                    </th>
+                                    <th data-sortable="true" style="width: 15%;">
+                                        저자
+                                    </th>
+                                    <th data-sortable="true" style="width: 15%;">
+                                        출판사
+                                    </th>
+                                    <th data-sortable="true" style="width: 15%;">
+                                        가격
+                                    </th>
+                                    <th data-sortable="true" style="width: 10%;">
+                                        출판일
+                                    </th>
+                                    <th data-sortable="true" style="width: 15%;">
+                                        국제표준도서번호
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="info : ${naverBookApiList}">
+                                        <td>
+                                            <div class="image-enlargement">
+                                                <img th:src="${info.image}" th:alt="${info.title}" class="tb-list-img">
+                                            </div>
+                                        </td>
+                                        <td><a th:href="${info.link}" th:text="${info.title}"></a></td>
+                                        <td th:text="${info.author}"></td>
+                                        <td th:text="${info.publisher}"></td>
+                                        <td th:text="${info.discount}"></td>
+                                        <td th:text="${info.pubdate}"></td>
+                                        <td th:text="${info.isbn}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--                        <div class="datatable-bottom">
+                                                    <nav class="datatable-pagination">
+                                                        <ul class="datatable-pagination-list">
+                                                            <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
+                                                                <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=1)}">‹‹</a>
+                                                            </li>
+                                                            <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
+                                                                <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=${list.number})}">‹</a>
+                                                            </li>
+                                                            <li class="datatable-pagination-list-item" th:classappend="${page == (list.pageable.pageNumber + 1)} ? 'datatable-disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                                                                <a class="datatable-pagination-list-item-link" href="#" th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
+                                                            </li>
+                                                            <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
+                                                                <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.number + 2})}">›</a>
+                                                            </li>
+                                                            <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
+                                                                <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.totalPages})}">››</a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>-->
+                    </div>
+                    <div class="text-center">
+                        <a href="/board/reg" class="btn btn-primary">등록</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!--<script type="text/javascript">
+
+    </script>-->
+</div>
+</html>
