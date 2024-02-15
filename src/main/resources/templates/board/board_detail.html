@@ -59,7 +59,7 @@
                                 <td>
                                     <th:block th:each="fileName :${boardInfo.storedFileNm}">
                                         <th:block th:if="${boardInfo.atchFileYn} == 'Y'">
-                                            <img th:src="@{|/upload/${fileName}|}" alt="" class="tb_img">
+                                            <img th:src="@{|/upload/${fileName}|}" alt="" class="tb-file-img">
                                         </th:block>
                                     </th:block>
                                 </td>
