@@ -33,19 +33,4 @@ public class MemberController {
     public String loginForm() {
         return "member/member_login";
     }
-
-    /*
-    @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session){
-        MemberDTO  loginResult = memberService.login(memberDTO);
-
-        if (loginResult != null){
-            session.setAttribute("mberEmail", loginResult.getMberEmail());
-            session.setAttribute("mberNm", loginResult.getMberNm());
-            return "redirect:/board/list";
-        } else {
-            return "member/member_login";
-        }
-    }
-    */
 }

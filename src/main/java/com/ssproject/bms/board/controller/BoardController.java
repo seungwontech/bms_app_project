@@ -109,9 +109,6 @@ public class BoardController {
      */
     @PostMapping("/mod")
     public String mod(@ModelAttribute BoardDTO boardDTO, Model model, @PageableDefault(page = 1) Pageable pageable, Authentication autentication) {
-        // BoardDTO boardInfo = boardService.mod(boardDTO);
-        // model.addAttribute("boardInfo", boardInfo);
-        // model.addAttribute("page", pageable.getPageNumber());
 
         boardService.mod(autentication.getName(), boardDTO);
         int id = boardDTO.getNttId();
@@ -132,34 +129,4 @@ public class BoardController {
         boardService.delete(nttId);
         return "redirect:/board/list";
     }
-
-    /**
-     * 페이징
-     * @param pageable
-     * @param model
-     * @return
-     */
-/*    @GetMapping("/paging")
-    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
-//        pageable.getPageNumber();
-        Page<BoardDTO> boardList = boardService.paging(pageable);
-        int blockLimit = 3;
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
-
-        // page 갯수 20개
-        // 현재 사용자가 3페이지
-        // 1 2 3
-        // 현재 사용자가 7페이지
-        // 7 8 9
-        // 보여지는 페이지 갯수 3개
-        // 총 페이지 갯수 8개
-        System.out.println("boardList : "+ boardList);
-
-        model.addAttribute("list", boardList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        return "board/board_list";
-
-    }*/
 }
