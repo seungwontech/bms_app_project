@@ -17,30 +17,22 @@
     </div>
     <section class="sample-page">
         <div class="container" data-aos="fade-up">
-
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">네이버 도서 검색</h5>
-                    <div class="datatable-search">
-                        <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+                    <div class="search-bar">
+                        <div class="search-form d-flex align-items-center" method="POST" action="#">
+                            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+                            <button type="submit" title="Search" onclick="fnNaverBookSearch();"><i class="bi bi-search"></i></button>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">네이버 도서 검색 결과</h5>
                     <!-- Table with stripped rows -->
                     <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-                        <div class="datatable-top">
-                            <div class="datatable-dropdown">
-                                <label>
-                                    <select class="datatable-selector">
-                                        <option value="5">5</option>
-                                        <option value="10" selected="">10</option>
-                                        <option value="15">15</option>
-                                        <option value="-1">All</option>
-                                    </select> entries per page
-                                </label>
-                            </div>
-                            <div class="datatable-search">
-                                <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
-                            </div>
-                        </div>
                         <div class="datatable-container">
                             <table class="table datatable datatable-table">
                                 <thead>
@@ -85,39 +77,27 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!--                        <div class="datatable-bottom">
-                                                    <nav class="datatable-pagination">
-                                                        <ul class="datatable-pagination-list">
-                                                            <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
-                                                                <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=1)}">‹‹</a>
-                                                            </li>
-                                                            <li class="datatable-pagination-list-item" th:classappend="${list.first} ? 'datatable-hidden datatable-disabled'">
-                                                                <a class="datatable-pagination-list-item-link" th:href="${list.first} ? '#' : @{/board/list(page=${list.number})}">‹</a>
-                                                            </li>
-                                                            <li class="datatable-pagination-list-item" th:classappend="${page == (list.pageable.pageNumber + 1)} ? 'datatable-disabled'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                                                                <a class="datatable-pagination-list-item-link" href="#" th:href="@{/board/list(page=${page})}" th:text="${page}"></a>
-                                                            </li>
-                                                            <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
-                                                                <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.number + 2})}">›</a>
-                                                            </li>
-                                                            <li class="datatable-pagination-list-item" th:classappend="${list.last} ? 'datatable-hidden datatable-disabled'">
-                                                                <a class="datatable-pagination-list-item-link" th:href="${list.last} ? '#' : @{/board/list(page=${list.totalPages})}">››</a>
-                                                            </li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>-->
                     </div>
-                    <div class="text-center">
-                        <a href="/board/reg" class="btn btn-primary">등록</a>
-                    </div>
-
                 </div>
             </div>
 
         </div>
     </section>
-    <!--<script type="text/javascript">
+<script type="text/javascript">
 
-    </script>-->
+function fnNaverBookSearch() {
+    $.ajax({
+        type: "post",
+        url: "/book/getNaverBookSearchList",
+        data: {
+
+        },
+        success: function (res) {
+
+        }
+    });
+}
+
+</script>
 </div>
 </html>
