@@ -21,9 +21,9 @@
                 <div class="card-body">
                     <h5 class="card-title">네이버 도서 검색</h5>
                     <div class="search-bar">
-                        <div class="search-form d-flex align-items-center" method="POST" action="#">
-                            <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-                            <button type="submit" title="Search" onclick="fnNaverBookSearch();"><i class="bi bi-search"></i></button>
+                        <div class="search-form d-flex align-items-center">
+                            <input type="text" id="searchTitle" name="searchTitle" placeholder="Search" title="Enter search keyword">
+                            <button type="submit" title="Search" onclick="fnGetNaverBookSearchList();"><i class="bi bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -85,15 +85,16 @@
     </section>
 <script type="text/javascript">
 
-function fnNaverBookSearch() {
+function fnGetNaverBookSearchList() {
+
+    let searchTitle = $("#searchTitle").val();
+
     $.ajax({
-        type: "post",
-        url: "/book/getNaverBookSearchList",
-        data: {
-
-        },
-        success: function (res) {
-
+        type: "get"
+        , url: "/book/getNaverBookSearchList" + "/" + searchTitle
+        , dataType : "json"
+        , success: function (result) {
+            console.log(result);
         }
     });
 }
