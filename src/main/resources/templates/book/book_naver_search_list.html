@@ -61,7 +61,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="info : ${naverBookApiList}">
+                                <tr id="list">
+
+                                </tr>
+<!--                                    <tr th:each="info : ${naverBookApiList}">
                                         <td>
                                             <div class="image-enlargement">
                                                 <img th:src="${info.image}" th:alt="${info.title}" class="tb-list-img">
@@ -73,7 +76,7 @@
                                         <td th:text="${info.discount}"></td>
                                         <td th:text="${info.pubdate}"></td>
                                         <td th:text="${info.isbn}"></td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -90,11 +93,11 @@ function fnGetNaverBookSearchList() {
     let searchTitle = $("#searchTitle").val();
 
     $.ajax({
-        type: "get"
+        type: "GET"
         , url: "/book/getNaverBookSearchList" + "/" + searchTitle
-        , dataType : "json"
+        , dataType : "JSON"
         , success: function (result) {
-            console.log(result);
+
         }
     });
 }
