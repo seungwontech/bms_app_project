@@ -60,10 +60,7 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr id="list">
-
-                                </tr>
+                                <tbody id="tb_tbody_list">
 <!--                                    <tr th:each="info : ${naverBookApiList}">
                                         <td>
                                             <div class="image-enlargement">
@@ -97,7 +94,19 @@ function fnGetNaverBookSearchList() {
         , url: "/book/getNaverBookSearchList" + "/" + searchTitle
         , dataType : "JSON"
         , success: function (result) {
-
+            let html = "";
+            $.each(result, function(){
+                html += "<tr>";
+                html +="<td><div class='image-enlargement'><img src='"+this.image+"' alt='"+this.title+"' class='tb-list-img'></div></td>";
+                html+="<td><a href='"+this.link+"' >"+this.title+"</a></td>";
+                html+="<td>"+this.authoAr+"</td>";
+                html+="<td>"+this.publisher+"</td>";
+                html+="<td>"+this.discount+"</td>";
+                html+="<td>"+this.pubdate+"</td>";
+                html+="<td>"+this.isbn+"</td>";
+                html+="</tr>";
+            });
+            $("#tb_tbody_list").append(html);
         }
     });
 }
