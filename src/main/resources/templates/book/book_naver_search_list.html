@@ -22,7 +22,7 @@
                     <h5 class="card-title">네이버 도서 검색</h5>
                     <div class="search-bar">
                         <div class="search-form d-flex align-items-center">
-                            <input type="text" id="searchTitle" name="searchTitle" placeholder="Search" title="Enter search keyword">
+                            <input type="text" id="searchTitle" name="searchTitle" onkeyup="enterkey();" placeholder="Search" title="Enter search keyword">
                             <button type="submit" title="Search" onclick="fnGetNaverBookSearchList();"><i class="bi bi-search"></i></button>
                         </div>
                     </div>
@@ -37,19 +37,22 @@
                             <table class="table datatable datatable-table">
                                 <thead>
                                 <tr>
+                                    <th data-sortable="true" style="width: 5%;">
+                                        선택
+                                    </th>
                                     <th data-sortable="true" style="width: auto;">
                                         책표지
                                     </th>
                                     <th data-sortable="true" style="width: 25%;">
                                         책이름
                                     </th>
-                                    <th data-sortable="true" style="width: 15%;">
+                                    <th data-sortable="true" style="width: 10%;">
                                         저자
                                     </th>
                                     <th data-sortable="true" style="width: 15%;">
                                         출판사
                                     </th>
-                                    <th data-sortable="true" style="width: 15%;">
+                                    <th data-sortable="true" style="width: 10%;">
                                         가격
                                     </th>
                                     <th data-sortable="true" style="width: 10%;">
@@ -85,9 +88,20 @@
     </section>
 <script type="text/javascript">
 
+function enterkey() {
+    if (window.event.keyCode == 13) {
+        fnGetNaverBookSearchList();
+    }
+}
+
 function fnGetNaverBookSearchList() {
 
     let searchTitle = $("#searchTitle").val();
+
+    if (!searchTitle) {
+        alert("검색 내용이 없습니다.");
+        return;
+    }
 
     $.ajax({
         type: "GET"
@@ -95,16 +109,22 @@ function fnGetNaverBookSearchList() {
         , dataType : "JSON"
         , success: function (result) {
             let html = "";
+            $("#tb_tbody_list").empty();
             $.each(result, function(){
                 html += "<tr>";
-                html +="<td><div class='image-enlargement'><img src='"+this.image+"' alt='"+this.title+"' class='tb-list-img'></div></td>";
-                html+="<td><a href='"+this.link+"' >"+this.title+"</a></td>";
-                html+="<td>"+this.authoAr+"</td>";
-                html+="<td>"+this.publisher+"</td>";
-                html+="<td>"+this.discount+"</td>";
-                html+="<td>"+this.pubdate+"</td>";
-                html+="<td>"+this.isbn+"</td>";
-                html+="</tr>";
+                html += "<td>";
+                html += "<div class='form-check'>";
+                html += "<input class='form-check-input' name='terms' type='checkbox' value='' id='acceptTerms' required=''>";
+                html += "</div>";
+                html += "</td>";
+                html += "<td><div class='image-enlargement'><img src='" + this.image + "' alt='" + this.title + "' class='tb-list-img'></div></td>";
+                html += "<td><a href='" + this.link + "' >" + this.title + "</a></td>";
+                html += "<td>" + this.author + "</td>";
+                html += "<td>" + this.publisher + "</td>";
+                html += "<td>" + this.discount + "</td>";
+                html += "<td>" + this.pubdate + "</td>";
+                html += "<td>" + this.isbn + "</td>";
+                html += "</tr>";
             });
             $("#tb_tbody_list").append(html);
         }
