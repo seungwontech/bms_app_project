@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "book_order_tbl")
 public class BookOrderEntity extends BaseEntity {

@@ -3,6 +3,7 @@ package com.ssproject.bms.book;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssproject.bms.book.dto.BookOrderDTO;
 import com.ssproject.bms.book.entity.BookOrderEntity;
 import com.ssproject.bms.book.repository.BookRepositoryTests;
 import com.ssproject.bms.book.vo.NaverBookApiVO;
@@ -49,10 +50,22 @@ public class BookTests {
         bookRepositoryTests.saveAll(bookOrderEntityList);
     }
 
+    @Test
+    public void getOrderBookList() {
+        List<BookOrderEntity> bookOrderEntityList = bookRepositoryTests.findAll();
+        List<BookOrderDTO> bookOrderDTOList = new ArrayList<>();
+
+        for (BookOrderEntity info : bookOrderEntityList) {
+            bookOrderDTOList.add(BookOrderDTO.toBookOrderDTO(info));
+        }
+
+        System.out.println(bookOrderDTOList);
+    }
+
     public ResponseEntity<List<NaverBookApiVO>> getNaverBookSearchApi(@PathVariable String searchText) {
 
-        String clientId = "";
-        String clientSecret = "";
+        String clientId = "iNu2xWsK2vq95Q6Z5YKd";
+        String clientSecret = "b7YQQQEja4";
 
         URI uri = UriComponentsBuilder
                 .fromUriString("https://openapi.naver.com")
