@@ -64,8 +64,8 @@ public class BookTests {
 
     public ResponseEntity<List<NaverBookApiVO>> getNaverBookSearchApi(@PathVariable String searchText) {
 
-        String clientId = "iNu2xWsK2vq95Q6Z5YKd";
-        String clientSecret = "b7YQQQEja4";
+        String clientId = "";
+        String clientSecret = "";
 
         URI uri = UriComponentsBuilder
                 .fromUriString("https://openapi.naver.com")
