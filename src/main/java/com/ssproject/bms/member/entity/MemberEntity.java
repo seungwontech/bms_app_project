@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssproject.bms.board.entity.BoardEntity;
 import com.ssproject.bms.member.dto.MemberDTO;
 import com.ssproject.bms.board.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "mber_tbl")
 public class MemberEntity extends BaseEntity {
     @Id
@@ -47,7 +47,26 @@ public class MemberEntity extends BaseEntity {
     private List<MemberAuthorEntity> authors = new ArrayList<>();
 
 
-    @OneToMany(mappedBy ="member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<BoardEntity> boards = new ArrayList<>();
+
+
+    @Builder(builderMethodName = "createMemberEntity")
+    public MemberEntity(String mberNm, String mberEmail) {
+        this.mberNm = mberNm;
+        this.mberEmail = mberEmail;
+        this.useYn = 'Y';
+        this.mberPw = "1234";
+    }
+
+    public MemberEntity update(String mberNm, String mberEmail) {
+        this.mberNm = mberNm;
+        this.mberEmail = mberEmail;
+        return this;
+    }
+
+    public String getRoleKey() {
+        return "1";
+    }
 }

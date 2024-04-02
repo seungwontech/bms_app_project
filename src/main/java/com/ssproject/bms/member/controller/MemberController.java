@@ -1,9 +1,11 @@
 package com.ssproject.bms.member.controller;
 
 import com.ssproject.bms.member.dto.MemberDTO;
+import com.ssproject.bms.member.dto.SessionUser;
 import com.ssproject.bms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
+    private final HttpSession httpSession;
     private final MemberService memberService;
 
     @GetMapping("/reg")
@@ -30,7 +32,12 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
+        SessionUser user = (SessionUser) httpSession.getAttribute("mberNm");
+        if (user != null) {
+            model.addAttribute("userName", user.getMberNm());
+        }
         return "member/member_login";
     }
+
 }

@@ -40,7 +40,7 @@
                                 <a href="/member/reg" class="btn btn-dark">회원가입</a>
                             </div>
                         </form>
-
+                        <a sec:authorize="isAnonymous()" href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
                     </div>
                 </div><!-- card -->
             </div><!-- card-center -->

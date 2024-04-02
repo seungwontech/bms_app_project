@@ -1,5 +1,6 @@
 package com.ssproject.bms.member.config;
 
+import com.ssproject.bms.member.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ import javax.servlet.DispatcherType;
 public class WebSecurityConfig {
 
     private final UserDetailsService customUserDetailsService;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -65,7 +66,11 @@ public class WebSecurityConfig {
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true));
+                        .invalidateHttpSession(true)
+                )
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
 
         return http.build();
     }
