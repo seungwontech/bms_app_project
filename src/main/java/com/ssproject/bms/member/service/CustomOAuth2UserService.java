@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ssproject.bms.member.dto.OAuthAttributes;
 import com.ssproject.bms.member.dto.SessionUser;
+import com.ssproject.bms.member.entity.MemberAuthorEntity;
 import com.ssproject.bms.member.entity.MemberEntity;
 import com.ssproject.bms.member.repository.MemberRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,6 +53,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         MemberEntity memberEntity = memberRepository.findByMberEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getEmail()))
                 .orElse(attributes.toEntity());
+
+        MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
+        memberAuthorEntity.setAuthorId(1);
+        memberEntity.getAuthors().add(memberAuthorEntity);
 
         return memberRepository.save(memberEntity);
     }
