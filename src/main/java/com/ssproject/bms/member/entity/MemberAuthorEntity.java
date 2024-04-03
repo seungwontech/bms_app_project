@@ -6,22 +6,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @ToString
-@Table(name="author_tbl")
+@IdClass(MemberAuthorId.class)
+@Table(name="mber_author_tbl")
 public class MemberAuthorEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int mberId;
+    @Id
     private int authorId;
-    private String authorNm;
 
+    @ManyToOne
+    @JoinColumn(name = "mberId",  updatable = false, insertable = false)
+    private MemberEntity memberEntity;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToOne
+    @JoinColumn(name = "authorId", updatable = false, insertable = false)
+    private AuthorEntity authorEntity;
+
+  /*  @ManyToMany(mappedBy = "authors")
     @JsonIgnore
-    private List<MemberEntity> members;
+    private List<MemberEntity> members;*/
 
 }

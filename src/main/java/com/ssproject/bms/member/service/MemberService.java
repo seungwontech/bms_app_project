@@ -35,9 +35,9 @@ public class MemberService implements UserDetailsService {
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
 
         MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
-        memberAuthorEntity.setAuthorId(memberDTO.getAuthorId());
-
-        memberEntity.getAuthors().add(memberAuthorEntity);
+        memberAuthorEntity.getAuthorEntity().setAuthorId(memberDTO.getAuthorId());
+        memberEntity.getMemberAuthors().add(memberAuthorEntity);
+        //memberEntity.getAuthors().add(memberAuthorEntity);
         memberRepository.save(memberEntity);
     }
 
@@ -52,9 +52,9 @@ public class MemberService implements UserDetailsService {
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(MemberEntity mberInfo) {
-        String[] mberAuthors = mberInfo.getAuthors()
+        String[] mberAuthors = mberInfo.getMemberAuthors()
                 .stream()
-                .map((author) -> author.getAuthorNm())
+                .map((author) -> author.getAuthorEntity().getAuthorId())
                 .toArray(String[]::new);
 
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(mberAuthors);

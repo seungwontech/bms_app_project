@@ -37,14 +37,15 @@ public class MemberEntity extends BaseEntity {
         return memberEntity;
     }
 
-
-    @JsonIgnore
+    @OneToMany(mappedBy = "memberEntity")
+    private List<MemberAuthorEntity> memberAuthors = new ArrayList<>();
+ /*   @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "mber_author_tbl"
             , joinColumns = @JoinColumn(name = "mber_id")
             , inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<MemberAuthorEntity> authors = new ArrayList<>();
+    private List<MemberAuthorEntity> authors = new ArrayList<>();*/
 
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
