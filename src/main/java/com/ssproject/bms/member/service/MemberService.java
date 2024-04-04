@@ -1,8 +1,11 @@
 package com.ssproject.bms.member.service;
 
 import com.ssproject.bms.member.dto.MemberDTO;
+import com.ssproject.bms.member.entity.AuthorEntity;
 import com.ssproject.bms.member.entity.MemberAuthorEntity;
 import com.ssproject.bms.member.entity.MemberEntity;
+import com.ssproject.bms.member.repository.AuthorRepository;
+import com.ssproject.bms.member.repository.MemberAuthorRepository;
 import com.ssproject.bms.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,11 +26,19 @@ import java.util.Collection;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
+    private final AuthorRepository authorRepository;
+    private final MemberAuthorRepository memberAuthorRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public AuthorEntity getAuthorInfo(int authorId) {
+        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findByAuthorId(authorId);
+        AuthorEntity authorEntity = optionalAuthorEntity.get();
+        return authorEntity;
+    }
 
     /**
      * 회원가입
+     *
      * @param memberDTO
      */
     public void reg(MemberDTO memberDTO) {
@@ -35,10 +47,12 @@ public class MemberService implements UserDetailsService {
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
 
         MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
-        memberAuthorEntity.getAuthorEntity().setAuthorId(memberDTO.getAuthorId());
+        memberAuthorEntity.setAuthorEntity(getAuthorInfo(memberDTO.getAuthorId()));
         memberEntity.getMemberAuthors().add(memberAuthorEntity);
-        //memberEntity.getAuthors().add(memberAuthorEntity);
         memberRepository.save(memberEntity);
+
+        memberAuthorEntity.setMemberEntity(memberEntity);
+        memberAuthorRepository.save(memberAuthorEntity);
     }
 
     @Override
@@ -54,7 +68,7 @@ public class MemberService implements UserDetailsService {
     private static Collection<? extends GrantedAuthority> getAuthorities(MemberEntity mberInfo) {
         String[] mberAuthors = mberInfo.getMemberAuthors()
                 .stream()
-                .map((author) -> author.getAuthorEntity().getAuthorId())
+                .map((author) -> author.getAuthorEntity().getAuthorNm())
                 .toArray(String[]::new);
 
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(mberAuthors);

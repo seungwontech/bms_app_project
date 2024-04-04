@@ -12,13 +12,14 @@ import java.util.List;
 @Setter
 @Entity
 @ToString
-@Table(name="author_tbl")
+@Table(name = "author_tbl")
 public class AuthorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorId;
+
     private String authorNm;
 
     @OneToMany(mappedBy = "authorEntity")
-    private List<MemberAuthorEntity> MemberAuthors = new ArrayList<>();
+    private List<MemberAuthorEntity> memberAuthors = new ArrayList<>();
 }

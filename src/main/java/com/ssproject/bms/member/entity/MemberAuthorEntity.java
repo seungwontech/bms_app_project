@@ -13,24 +13,24 @@ import java.util.List;
 @Setter
 @Entity
 @ToString
-@IdClass(MemberAuthorId.class)
-@Table(name="mber_author_tbl")
+@Table(name = "mber_author_tbl")
 public class MemberAuthorEntity {
     @Id
-    private int mberId;
-    @Id
-    private int authorId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int mberAuthorId;
 
     @ManyToOne
-    @JoinColumn(name = "mberId",  updatable = false, insertable = false)
+    @JoinColumn(name = "mber_id")
     private MemberEntity memberEntity;
 
     @ManyToOne
-    @JoinColumn(name = "authorId", updatable = false, insertable = false)
+    @JoinColumn(name = "author_id")
     private AuthorEntity authorEntity;
 
-  /*  @ManyToMany(mappedBy = "authors")
+    /*
+    @ManyToMany(mappedBy = "authors")
     @JsonIgnore
-    private List<MemberEntity> members;*/
+    private List<MemberEntity> members;
+    */
 
 }
