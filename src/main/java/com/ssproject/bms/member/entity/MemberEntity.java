@@ -56,20 +56,10 @@ public class MemberEntity extends BaseEntity {
 
 
     @Builder(builderMethodName = "createMemberEntity")
-    public MemberEntity(String mberNm, String mberEmail) {
+    public MemberEntity(String mberNm, String mberEmail, String mberPw, char useYn) {
         this.mberNm = mberNm;
         this.mberEmail = mberEmail;
-        this.useYn = 'Y';
-        this.mberPw = "1234";
-    }
-
-    public MemberEntity update(String mberNm, String mberEmail) {
-        this.mberNm = mberNm;
-        this.mberEmail = mberEmail;
-        return this;
-    }
-
-    public String getRoleKey() {
-        return "1";
+        this.useYn = useYn;
+        this.mberPw = mberPw;
     }
 }

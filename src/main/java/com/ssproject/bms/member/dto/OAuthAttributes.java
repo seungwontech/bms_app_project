@@ -22,24 +22,26 @@ public class OAuthAttributes {
         this.email = email;
     }
 
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    public static OAuthAttributes of(String userNameAttributeName, Map<String, Object> attributes) {
         return ofNaver("id", attributes);
     }
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         return OAuthAttributes.builder()
-                .name((String) response.get("name"))
-                .email((String) response.get("email"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
                 .build();
     }
 
-    public MemberEntity toEntity() {
+    public MemberEntity toEntity(String mberPw, char useYn) {
         return MemberEntity.createMemberEntity()
                 .mberNm(name)
                 .mberEmail(email)
+                .useYn(useYn)
+                .mberPw(mberPw)
                 .build();
     }
 }
