@@ -31,9 +31,7 @@ public class MemberService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public AuthorEntity getAuthorInfo(int authorId) {
-        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findByAuthorId(authorId);
-        AuthorEntity authorEntity = optionalAuthorEntity.get();
-        return authorEntity;
+        return authorRepository.findByAuthorId(authorId).orElseThrow();
     }
 
     /**

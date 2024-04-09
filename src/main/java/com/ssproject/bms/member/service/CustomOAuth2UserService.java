@@ -1,8 +1,9 @@
 package com.ssproject.bms.member.service;
 
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import com.ssproject.bms.member.entity.MemberEntity;
 import com.ssproject.bms.member.repository.AuthorRepository;
 import com.ssproject.bms.member.repository.MemberAuthorRepository;
 import com.ssproject.bms.member.repository.MemberRepository;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -25,7 +27,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @RequiredArgsConstructor
@@ -41,51 +42,86 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final HttpSession httpSession;
 
-
+    /**
+     * OAuth2UserRequest를 기반으로 사용자 정보를 가져오고, 로그인 처리
+     *
+     * @param userRequest
+     * @return
+     * @throws OAuth2AuthenticationException
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
-        OAuth2User oAuth2User = service.loadUser(userRequest); // Oath2 정보를 가져옴
+        OAuth2User oAuth2User = service.loadUser(userRequest);
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 소셜 정보 가져옴
-        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();  //OAuth2 로그인 시 키(PK)가 되는 값
-        OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes()); // 소셜 로그인에서 API가 제공하는 userInfo의 Json 값(유저 정보들)
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        OAuthAttributes attributes = OAuthAttributes.of(userNameAttributeName, oAuth2User.getAttributes());
 
         MemberEntity memberEntity = saveOrUpdate(attributes);
-        //MemberAuthorEntity memberAuthorEntity = save(memberEntity);
 
         httpSession.setAttribute("memberEntity", new SessionUser(memberEntity));
-//
-        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
+        Collection<? extends GrantedAuthority> authorities = getAuthorities(memberEntity);
+
+
+        return new DefaultOAuth2User(authorities,
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
 
+    /**
+     * 사용자의 권한 설정
+     *
+     * @param memberEntity
+     * @return
+     */
+    private Collection<? extends GrantedAuthority> getAuthorities(MemberEntity memberEntity) {
+        return Collections.singleton(new SimpleGrantedAuthority(memberEntity.getMemberAuthors().get(0).getAuthorEntity().getAuthorNm()));
+    }
+
+    /**
+     * OAuthAttributes 정보로 회원 생성 또는 업데이트
+     *
+     * @param attributes
+     * @return
+     */
     private MemberEntity saveOrUpdate(OAuthAttributes attributes) {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMberEmail(attributes.getEmail());
+        MemberEntity memberEntity = memberRepository.findByMberEmail(attributes.getEmail()).orElse(null);
 
-        if (optionalMemberEntity.isEmpty()) {
-            MemberEntity memberEntity = attributes.toEntity(bCryptPasswordEncoder.encode("1234"), 'Y');
-            return memberRepository.save(memberEntity);
+        if (memberEntity == null) {
+            // 새로운 회원이면 회원 정보 생성
+            memberEntity = attributes.toEntity(bCryptPasswordEncoder.encode("1234"), 'Y');
+            MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
+            memberAuthorEntity.setAuthorEntity(getAuthorInfo(1));
+            memberEntity.getMemberAuthors().add(memberAuthorEntity);
+            memberRepository.save(memberEntity);
+            memberAuthorEntity.setMemberEntity(memberEntity);
+            memberAuthorRepository.save(memberAuthorEntity);
+        } else {
+            memberEntity.setMemberAuthors(getMemberAuthors(memberEntity.getMberId()));
         }
-        return optionalMemberEntity.get();
+
+        return memberEntity;
     }
 
+    /**
+     * 권한 정보 조회
+     *
+     * @param authorId
+     * @return
+     */
     public AuthorEntity getAuthorInfo(int authorId) {
-        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findByAuthorId(authorId);
-        AuthorEntity authorEntity = optionalAuthorEntity.get();
-        return authorEntity;
+        return authorRepository.findByAuthorId(authorId).orElseThrow();
     }
 
-    private MemberAuthorEntity save(MemberEntity memberEntity) {
-        //Optional<MemberAuthorEntity> optionalAuthorEntity = memberAuthorRepository.findByMberId(memberEntity.getMberId());
-        MemberAuthorEntity memberAuthorEntity = new MemberAuthorEntity();
-        memberAuthorEntity.setAuthorEntity(getAuthorInfo(1));
-        memberEntity.getMemberAuthors().add(memberAuthorEntity);
-        memberAuthorEntity.setMemberEntity(memberEntity);
-        memberAuthorRepository.save(memberAuthorEntity);
-        return memberAuthorRepository.save(memberAuthorEntity);
+    /**
+     * 가입된 회원 권한 정보 조회
+     *
+     * @param mberId
+     * @return
+     */
+    public List<MemberAuthorEntity> getMemberAuthors(int mberId) {
+        return memberAuthorRepository.findByMemberEntityMberId(mberId);
     }
-
 }
