@@ -4,6 +4,7 @@ import com.ssproject.bms.board.dto.BoardDTO;
 import com.ssproject.bms.board.dto.CommentDTO;
 import com.ssproject.bms.board.service.BoardService;
 import com.ssproject.bms.board.service.CommentService;
+import com.ssproject.bms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-
+    private final MemberService memberService;
     private final BoardService boardService;
     private final CommentService commentService;
 
@@ -79,9 +80,15 @@ public class BoardController {
         boardService.updateHits(nttId);
         BoardDTO boardInfo = boardService.findById(nttId);
         List<CommentDTO> commentDTOList = commentService.findAll(nttId);
+
+        int currentUserId = (int) memberService.getCurrentUser();
+        // 현재 사용자의 아이디와 게시물 작성자의 아이디를 비교하여 수정 버튼을 표시 또는 숨김.
+        boolean isCurrentUserWriter = currentUserId == boardInfo.getMberId();
+
         model.addAttribute("commentList", commentDTOList);
         model.addAttribute("boardInfo", boardInfo);
         model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("isCurrentUserWriter", isCurrentUserWriter);
         return "board/board_detail";
     }
 

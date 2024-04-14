@@ -65,9 +65,13 @@
                                 </td>
                             </tr>
                         </table>
-                        <div class="text-center">
+                        <div class="text-center" th:if="${isCurrentUserWriter}">
                             <button onclick="delBtn()" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
                             <button onclick="modBtn()" class="btn btn-primary">수정</button>
+                            <button onclick="listBtn()" class="btn btn-dark">목록</button>
+                        </div>
+                        <div class="text-center" th:if="${not isCurrentUserWriter}">
+                            <button onclick="delBtn()" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">삭제</button>
                             <button onclick="listBtn()" class="btn btn-dark">목록</button>
                         </div>
                     </div>

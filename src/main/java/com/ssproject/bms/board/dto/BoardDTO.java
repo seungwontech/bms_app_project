@@ -46,6 +46,7 @@ public class BoardDTO {
         boardDTO.setChgDt(boardEntity.getChgDt());
         boardDTO.setUseYn(boardEntity.getUseYn());
         boardDTO.setAtchFileYn(boardEntity.getAtchFileYn());
+        boardDTO.setMberId(boardEntity.getMember().getMberId());
 
         if (boardEntity.getAtchFileYn() == 'Y') {
             List<String> originalFileNmList = new ArrayList<>();
