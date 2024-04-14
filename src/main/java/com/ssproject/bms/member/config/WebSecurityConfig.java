@@ -21,19 +21,13 @@ import javax.servlet.DispatcherType;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
-    private final UserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final UserDetailsService customUserDetailsService;
+
     @Bean
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    /*
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/member/reg");
-    }
-    */
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,8 +45,10 @@ public class WebSecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/assets/**")
-                                , new AntPathRequestMatcher("/member/reg"))
-                        .permitAll().anyRequest()
+                                , new AntPathRequestMatcher("/member/reg")
+                        )
+                        .permitAll()
+                        .anyRequest()
                         .authenticated()
                 )
                 .formLogin(form -> form

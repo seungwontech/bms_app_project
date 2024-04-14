@@ -1,9 +1,9 @@
 package com.ssproject.bms.member.controller;
 
 import com.ssproject.bms.member.dto.MemberDTO;
-import com.ssproject.bms.member.dto.SessionUser;
 import com.ssproject.bms.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,16 +28,11 @@ public class MemberController {
     @PostMapping("/reg")
     public String reg(@ModelAttribute MemberDTO memberDTO) {
         memberService.reg(memberDTO);
-        return "member/member_reg";
+        return "redirect:/member/member_login";
     }
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("mberNm");
-        if (user != null) {
-            model.addAttribute("userName", user.getMberNm());
-        }
+    public String loginForm() {
         return "member/member_login";
     }
-
 }
