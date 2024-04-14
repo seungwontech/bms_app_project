@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class BookTests {
@@ -28,6 +29,9 @@ public class BookTests {
     private BookRepositoryTests bookRepositoryTests;
 
     public static final String SEARCH_TEXT = "스프링 부트";
+    public static final String NAVER_BOOK_API_URL = "https://openapi.naver.com/v1/search/book.json";
+    public static final String CLIENT_ID = "";
+    public static final String CLIENT_SECRET = "";
 
     @Test
     public void getNaverBookSearchList() {
@@ -38,15 +42,12 @@ public class BookTests {
     @Test
     public void saveOrderBookList() {
         ResponseEntity<List<NaverBookApiVO>> list = getNaverBookSearchApi(SEARCH_TEXT);
-        List<BookOrderEntity> bookOrderEntityList = new ArrayList<>();
-        for (NaverBookApiVO info : list.getBody()) {
-            BookOrderEntity bookOrderEntityInfo = BookOrderEntity.createBuilder()
-                    .orderBookTitle(info.getTitle())
-                    .mberId(21)
-                    .build();
-
-            bookOrderEntityList.add(bookOrderEntityInfo);
-        }
+        List<BookOrderEntity> bookOrderEntityList = list.getBody().stream()
+                .map(info -> BookOrderEntity.createBuilder()
+                        .orderBookTitle(info.getTitle())
+                        .mberId(21)
+                        .build())
+                .collect(Collectors.toList());
         bookRepositoryTests.saveAll(bookOrderEntityList);
     }
 
@@ -68,8 +69,7 @@ public class BookTests {
         String clientSecret = "";
 
         URI uri = UriComponentsBuilder
-                .fromUriString("https://openapi.naver.com")
-                .path("/v1/search/book.json")
+                .fromUriString(NAVER_BOOK_API_URL)
                 .queryParam("query", searchText)
                 .queryParam("display", 10)
                 .queryParam("start", 1)
@@ -80,8 +80,8 @@ public class BookTests {
 
         RequestEntity<Void> requestEntity = RequestEntity
                 .get(uri)
-                .header("X-Naver-Client-Id", clientId)
-                .header("X-Naver-Client-Secret", clientSecret)
+                .header("X-Naver-Client-Id", CLIENT_ID)
+                .header("X-Naver-Client-Secret", CLIENT_SECRET)
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();
