@@ -5,10 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import com.ssproject.bms.member.dto.OAuthAttributes;
-import com.ssproject.bms.member.dto.SessionUser;
 import com.ssproject.bms.member.entity.AuthorEntity;
 import com.ssproject.bms.member.entity.MemberAuthorEntity;
 import com.ssproject.bms.member.entity.MemberEntity;
@@ -40,8 +37,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final HttpSession httpSession;
-
     /**
      * OAuth2UserRequest를 기반으로 사용자 정보를 가져오고, 로그인 처리
      *
@@ -61,9 +56,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         MemberEntity memberEntity = saveOrUpdate(attributes);
 
-        httpSession.setAttribute("memberEntity", new SessionUser(memberEntity));
-        Collection<? extends GrantedAuthority> authorities = getAuthorities(memberEntity);
+        attributes.addAttribute("mber_id", memberEntity.getMberId());
 
+        Collection<? extends GrantedAuthority> authorities = getAuthorities(memberEntity);
 
         return new DefaultOAuth2User(authorities,
                 attributes.getAttributes(),
