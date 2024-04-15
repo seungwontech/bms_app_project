@@ -1,26 +1,35 @@
 package com.ssproject.bms.member.dto;
 
 
+import com.ssproject.bms.member.entity.MemberEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
-    private String username;
-    private String password;
-    private int mberId;
+    private MemberEntity memberEntity;
     private Collection<? extends GrantedAuthority> authorities;
+    private Map<String, Object> attributes; // OAuth2 사용자의 추가 속성
 
-    public CustomUserDetails(String username, String password, int mberId, Collection<? extends GrantedAuthority> authorities) {
-        this.username = username;
-        this.password = password;
-        this.mberId = mberId;
+    // 기본 생성자
+    public CustomUserDetails(MemberEntity memberEntity, Collection<? extends GrantedAuthority> authorities) {
+        this.memberEntity = memberEntity;
         this.authorities = authorities;
     }
+
+    // OAuth2 사용자 속성을 포함하는 생성자
+    public CustomUserDetails(MemberEntity memberEntity, Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
+        this.memberEntity = memberEntity;
+        this.authorities = authorities;
+        this.attributes = attributes;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,12 +38,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password; // 사용자의 패스워드 반환
+        return memberEntity.getMberPw(); // 사용자의 패스워드 반환
     }
 
     @Override
     public String getUsername() {
-        return username; // 사용자명 반환
+        return memberEntity.getMberNm(); // 사용자명 반환
     }
 
     @Override
@@ -55,6 +64,18 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true; // 계정 활성화 여부 반환 (항상 true)
+    }
+
+    // Methods from OAuth2User interface
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes; // OAuth2 사용자의 추가 속성 반환
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
 

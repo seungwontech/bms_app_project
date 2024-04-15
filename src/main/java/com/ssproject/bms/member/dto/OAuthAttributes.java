@@ -12,7 +12,6 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
-    private int mberId;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email) {
@@ -20,8 +19,6 @@ public class OAuthAttributes {
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
-        this.mberId = mberId;
-
     }
 
     /**

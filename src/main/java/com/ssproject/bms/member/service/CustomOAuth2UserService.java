@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.ssproject.bms.member.dto.CustomUserDetails;
 import com.ssproject.bms.member.dto.OAuthAttributes;
 import com.ssproject.bms.member.entity.AuthorEntity;
 import com.ssproject.bms.member.entity.MemberAuthorEntity;
@@ -19,7 +20,6 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -56,13 +56,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         MemberEntity memberEntity = saveOrUpdate(attributes);
 
-        attributes.addAttribute("mber_id", memberEntity.getMberId());
-
-        Collection<? extends GrantedAuthority> authorities = getAuthorities(memberEntity);
-
-        return new DefaultOAuth2User(authorities,
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey());
+        return new CustomUserDetails(memberEntity, getAuthorities(memberEntity), oAuth2User.getAttributes());
     }
 
     /**

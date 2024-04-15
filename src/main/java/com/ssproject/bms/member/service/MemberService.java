@@ -70,11 +70,7 @@ public class MemberService implements UserDetailsService {
         MemberEntity mberInfo = memberRepository.findByMberEmail(mberEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("Email: " + mberEmail + " not found"));
 
-        String username = mberInfo.getMberEmail();
-        String password = mberInfo.getMberPw();
-        int mberId = mberInfo.getMberId();
-
-        return new CustomUserDetails(username, password, mberId, getAuthorities(mberInfo));
+        return new CustomUserDetails(mberInfo, getAuthorities(mberInfo));
     }
 
     /**
@@ -99,11 +95,7 @@ public class MemberService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                return ((CustomUserDetails) principal).getMberId();
-            } else if (principal instanceof OAuth2User) {
-                return ((OAuth2User) principal).getAttribute("mber_id");
-            }
+            return ((CustomUserDetails) principal).getMemberEntity().getMberId();
         }
         return null;
     }
